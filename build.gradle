@@ -1,5 +1,8 @@
 plugins {
+    id 'java'
+    id 'idea'
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
 }
 
 repositories {
@@ -15,9 +18,14 @@ test {
     useJUnitPlatform()
 }
 
-group 'com.michalporeba'
+group 'com.michalporeba.avie'
 version '0.1'
 
 application {
     mainClass = 'com.michalporeba.avie.Avie'
+}
+
+javafx {
+    version = "15"
+    modules = ['javafx.controls', 'javafx.fxml']
 }

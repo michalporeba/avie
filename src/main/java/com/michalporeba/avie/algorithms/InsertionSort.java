@@ -19,8 +19,6 @@ public class InsertionSort {
         }
     }
 
-    public void sort
-
     public boolean validate() {
         boolean outcome = true;
         for(int i = 1; outcome && i < a.length; ++i) {
