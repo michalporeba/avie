@@ -1,5 +1,10 @@
 package com.michalporeba.avie.algorithms;
 
+import com.michalporeba.avie.variables.AccessRecorder;
+import com.michalporeba.avie.variables.ArrayIndex;
+import com.michalporeba.avie.variables.NumericVariable;
+import com.michalporeba.avie.variables.Variable;
+
 import java.util.*;
 
 
@@ -8,19 +13,22 @@ public class InsertionSort implements Iterable<String> {
     private List<String> steps = new ArrayList<>();
     private Map<String, Integer> variables = new HashMap<>();
 
-    private final String I = "i";
-    private final String J = "j";
-    private final String K = "k";
+    private AccessRecorder recorder = new AccessRecorder() {
+        @Override
+        public void read(Variable variable) {
+            steps.add(String.format("%s -> %d", variable.getName(), variable.getValueWithoutLogging()));
+        }
 
-    private void v(String variable, int value) {
-        steps.add(String.format("%s = %d", variable, value));
-        variables.put(variable, value);
-    }
+        @Override
+        public void write(Variable variable) {
+            steps.add(String.format("%s = %d", variable.getName(), variable.getValueWithoutLogging()));
+        }
+    };
 
-    private int v(String variable) {
-        steps.add(String.format("%s -> %d", variable, variables.get(variable)));
-        return variables.get(variable);
-    }
+    private ArrayIndex i = new ArrayIndex(recorder, "i");
+    private ArrayIndex j = new ArrayIndex(recorder, "j");
+    private NumericVariable<Integer> k = new NumericVariable<>(recorder, "k", 0);
+
 
     private void a(int index, int value) {
         steps.add(String.format("a[%s] = %d", index, value));
@@ -30,16 +38,6 @@ public class InsertionSort implements Iterable<String> {
     private int a(int index) {
         steps.add(String.format("a[%d] -> %d", index, a[index]));
         return a[index];
-    }
-
-    private void increment(String variable) {
-        steps.add(String.format("++%s", variable));
-        variables.put(variable, 1+variables.get(variable));
-    }
-
-    private void decrement(String variable) {
-        steps.add(String.format("--%s", variable));
-        variables.put(variable, -1+variables.get(variable));
     }
 
     public void setup(int[] input) {
@@ -52,13 +50,13 @@ public class InsertionSort implements Iterable<String> {
     }
 
     private void initialize() {
-        v(I, 0);
-        v(K, 0);
-        v(J, 1);
+        i.set(0);
+        k.set(0);
+        j.set(1);
     }
 
     private boolean continueWhile() {
-        return v(J) < a.length;
+        return j.getValue() < a.length;
     }
 
     private boolean advance() {
@@ -71,15 +69,15 @@ public class InsertionSort implements Iterable<String> {
     }
 
     private void step() {
-        v(K, a(v(J)));
-        v(I, v(J)-1);
-        while (v(I)>=0 && a(v(I)) > v(K)) {
-            a(v(I)+1,  a(v(I)));
-            decrement(I);
+        k.set(a(j.getValue()));
+        i.set(j.getValue()-1);
+        while (i.getValue() >=0 && a(i.getValue()) > k.getValue()) {
+            a(i.getValue()+1,  a(i.getValue()));
+            i.add(-1);
         }
-        a(v(I)+1, v(K));
+        a(i.getValue()+1, k.getValue());
 
-        increment(J);
+        j.add(1);
     }
 
     public boolean validate() {

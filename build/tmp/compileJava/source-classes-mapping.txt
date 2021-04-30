@@ -3,8 +3,21 @@ com/michalporeba/avie/algorithms/ArrayAlgorithm.java
 com/michalporeba/avie/algorithms/Algorithm.java
  com.michalporeba.avie.algorithms.Algorithm
  com.michalporeba.avie.algorithms.Algorithm$Cost
+com/michalporeba/avie/operations/SetVariable.java
+ com.michalporeba.avie.operations.SetVariable
+com/michalporeba/avie/operations/Operation.java
+ com.michalporeba.avie.operations.Operation
+com/michalporeba/avie/variables/NumericVariable.java
+ com.michalporeba.avie.variables.NumericVariable
+com/michalporeba/avie/variables/ArrayIndex.java
+ com.michalporeba.avie.variables.ArrayIndex
 com/michalporeba/avie/Avie.java
  com.michalporeba.avie.Avie
 com/michalporeba/avie/algorithms/InsertionSort.java
  com.michalporeba.avie.algorithms.InsertionSort
  com.michalporeba.avie.algorithms.InsertionSort$1
+ com.michalporeba.avie.algorithms.InsertionSort$2
+com/michalporeba/avie/variables/AccessRecorder.java
+ com.michalporeba.avie.variables.AccessRecorder
+com/michalporeba/avie/variables/Variable.java
+ com.michalporeba.avie.variables.Variable
