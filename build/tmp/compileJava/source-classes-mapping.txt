@@ -7,3 +7,4 @@ com/michalporeba/avie/Avie.java
  com.michalporeba.avie.Avie
 com/michalporeba/avie/algorithms/InsertionSort.java
  com.michalporeba.avie.algorithms.InsertionSort
+ com.michalporeba.avie.algorithms.InsertionSort$1

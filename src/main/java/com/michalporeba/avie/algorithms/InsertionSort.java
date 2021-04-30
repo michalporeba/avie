@@ -1,12 +1,9 @@
 package com.michalporeba.avie.algorithms;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
-public class InsertionSort {
+public class InsertionSort implements Iterable<String> {
     private int[] a = new int[0];
     private List<String> steps = new ArrayList<>();
     private Map<String, Integer> variables = new HashMap<>();
@@ -47,30 +44,42 @@ public class InsertionSort {
 
     public void setup(int[] input) {
         a = input.clone();
+        initialize();
     }
 
-    public int[] getArray() {
+    public int[] getData() {
         return a;
     }
 
-    public List<String> getSteps() {
-        return steps;
-    }
-
-    public void sort() {
+    private void initialize() {
         v(I, 0);
         v(K, 0);
+        v(J, 1);
+    }
 
-        for(v(J, 1); v(J) < a.length; increment(J)) {
-            v(K, a(v(J)));
-            v(I, v(J)-1);
+    private boolean continueWhile() {
+        return v(J) < a.length;
+    }
 
-            while (v(I)>=0 && a(v(I)) > v(K)) {  // comparisons
-                a(v(I)+1,  a(v(I)));  // assignment + create 'empty space'
-                decrement(I);
-            }
-            a(v(I)+1, v(K));
+    private boolean advance() {
+        if (continueWhile()) {
+            step();
+            return true;
         }
+
+        return false;
+    }
+
+    private void step() {
+        v(K, a(v(J)));
+        v(I, v(J)-1);
+        while (v(I)>=0 && a(v(I)) > v(K)) {
+            a(v(I)+1,  a(v(I)));
+            decrement(I);
+        }
+        a(v(I)+1, v(K));
+
+        increment(J);
     }
 
     public boolean validate() {
@@ -79,5 +88,24 @@ public class InsertionSort {
             if (a[i] < a[i-1]) outcome = false;
         }
         return outcome;
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return new Iterator<>() {
+
+            @Override
+            public boolean hasNext() {
+                if (steps.size() == 0)
+                    return advance();
+
+                return true;
+            }
+
+            @Override
+            public String next() {
+                return steps.remove(0);
+            }
+        };
     }
 }
