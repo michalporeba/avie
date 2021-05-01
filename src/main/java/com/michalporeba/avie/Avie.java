@@ -24,7 +24,7 @@ public class Avie extends Application {
         Circle circle = new Circle(150, 150, 50, Color.RED);
 
         InsertionSort algorithm = new InsertionSort();
-        algorithm.setup(new int[]{3, 8, 2, 7, 1});
+        algorithm.setup(new Integer[]{3, 8, 2, 7, 1});
         System.out.println(Arrays.toString(algorithm.getData()));
         for(String s : algorithm) {
             System.out.println(s);

@@ -1,15 +1,18 @@
 package com.michalporeba.avie.variables;
 
 public class ArrayIndex extends NumericVariable<Integer> {
-    public ArrayIndex(AccessRecorder recorder, String name) {
+    public ArrayIndex(ScalarVariable.Recorder recorder, String name) {
         super(recorder, name, 0);
     }
 
     public void increment() {
-        super.add(1);
+        add(1);
     }
 
     public void decrement() {
-        super.add(-1);
+        add(-1);
     }
+
+    public int next() { return get()+1; }
+    public int previous() { return get()-1; }
 }

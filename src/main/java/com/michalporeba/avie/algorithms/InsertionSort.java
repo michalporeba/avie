@@ -1,52 +1,62 @@
 package com.michalporeba.avie.algorithms;
 
-import com.michalporeba.avie.variables.AccessRecorder;
-import com.michalporeba.avie.variables.ArrayIndex;
-import com.michalporeba.avie.variables.NumericVariable;
-import com.michalporeba.avie.variables.Variable;
+import com.michalporeba.avie.variables.*;
 
 import java.util.*;
 
 
 public class InsertionSort implements Iterable<String> {
-    private int[] a = new int[0];
     private List<String> steps = new ArrayList<>();
     private Map<String, Integer> variables = new HashMap<>();
 
-    private AccessRecorder recorder = new AccessRecorder() {
+    private ScalarVariable.Recorder scalarRecorder = new ScalarVariable.Recorder() {
         @Override
-        public void read(Variable variable) {
-            steps.add(String.format("%s -> %d", variable.getName(), variable.getValueWithoutLogging()));
+        public void read(ScalarVariable variable) {
+            steps.add(String.format("%s ->", variable.getName()));
         }
 
         @Override
-        public void write(Variable variable) {
-            steps.add(String.format("%s = %d", variable.getName(), variable.getValueWithoutLogging()));
+        public void write(ScalarVariable variable, Object value) {
+            steps.add(String.format("%s <- %d", variable.getName(), value));
         }
     };
 
-    private ArrayIndex i = new ArrayIndex(recorder, "i");
-    private ArrayIndex j = new ArrayIndex(recorder, "j");
-    private NumericVariable<Integer> k = new NumericVariable<>(recorder, "k", 0);
+    private ScalarVariable.Recorder indexRecorder = new ScalarVariable.Recorder() {
+        @Override
+        public void read(ScalarVariable variable) {
+            // do nothing
+        }
 
+        @Override
+        public void write(ScalarVariable variable, Object value) {
+            steps.add(String.format("%s <- %d", variable.getName(), value));
+        }
+    };
 
-    private void a(int index, int value) {
-        steps.add(String.format("a[%s] = %d", index, value));
-        a[index] = value;
-    }
+    private ArrayVariable.Recorder arrayRecorder = new ArrayVariable.Recorder() {
+        @Override
+        public void read(ArrayVariable variable, ArrayIndex index) {
+            steps.add(String.format("%s[%s=%s] ->", variable.getName(), index.getName(), index.get()));
+        }
 
-    private int a(int index) {
-        steps.add(String.format("a[%d] -> %d", index, a[index]));
-        return a[index];
-    }
+        @Override
+        public void write(ArrayVariable variable, ArrayIndex index, Object value) {
+            steps.add(String.format("%s[$s=%s] <- %d", variable.getName(), index.getName(), index.get(), value));
+        }
+    };
 
-    public void setup(int[] input) {
-        a = input.clone();
+    private ArrayVariable<Integer> a = new ArrayVariable<>(arrayRecorder, "a");
+    private ArrayIndex i = new ArrayIndex(indexRecorder, "i");
+    private ArrayIndex j = new ArrayIndex(indexRecorder, "j");
+    private NumericVariable<Integer> k = new NumericVariable<>(scalarRecorder, "k", 0);
+
+    public void setup(Integer[] input) {
+        a.set(input);
         initialize();
     }
 
-    public int[] getData() {
-        return a;
+    public Integer[] getData() {
+        return a.get();
     }
 
     private void initialize() {
@@ -56,7 +66,7 @@ public class InsertionSort implements Iterable<String> {
     }
 
     private boolean continueWhile() {
-        return j.getValue() < a.length;
+        return j.get() < a.size();
     }
 
     private boolean advance() {
@@ -69,21 +79,22 @@ public class InsertionSort implements Iterable<String> {
     }
 
     private void step() {
-        k.set(a(j.getValue()));
-        i.set(j.getValue()-1);
-        while (i.getValue() >=0 && a(i.getValue()) > k.getValue()) {
-            a(i.getValue()+1,  a(i.getValue()));
-            i.add(-1);
+        k.set(a.getAt(j));
+        i.set(j.get()-1);
+        while (i.get() >=0 && a.getAt(i) > k.get()) {
+            a.move(i, i.next());
+            i.decrement();
         }
-        a(i.getValue()+1, k.getValue());
+        a.setAt(i.next(), k);
 
-        j.add(1);
+        j.increment();
     }
 
     public boolean validate() {
         boolean outcome = true;
-        for(int i = 1; outcome && i < a.length; ++i) {
-            if (a[i] < a[i-1]) outcome = false;
+        Integer[] data = a.get();
+        for(int i = 1; outcome && i < a.size(); ++i) {
+            if (data[i] < data[i-1]) outcome = false;
         }
         return outcome;
     }
