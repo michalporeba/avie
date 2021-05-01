@@ -5,9 +5,9 @@ import com.michalporeba.avie.operations.Operation;
 import com.michalporeba.avie.visualisations.ArrayVisualisation;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.MenuBar;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -35,15 +35,16 @@ public class Avie extends Application {
         */
 
         MenuBar menuBar = new MenuBar();
-        Pane pane = new Pane();
-        VBox root = new VBox(menuBar, pane);
+        Pane pane = new AnchorPane();
+        pane.maxHeight(Double.MAX_VALUE);
+        BorderPane root = new BorderPane();
+        root.setCenter(pane);
+        root.setStyle("-fx-border-color: red");
 
         ArrayVisualisation<Integer> v = new ArrayVisualisation<>(pane);
         v.show(algorithm.getData());
 
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
-
-
     }
 }
