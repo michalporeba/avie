@@ -24,4 +24,8 @@ public abstract class ScalarVariable<T> extends Variable {
         void read(ScalarVariable variable);
         void write(ScalarVariable variable, Object value);
     }
+
+    protected Recorder getRecorder() {
+        return this.recorder;
+    }
 }

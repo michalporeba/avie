@@ -12,18 +12,18 @@ com/michalporeba/avie/variables/ArrayIndex.java
  com.michalporeba.avie.variables.ArrayIndex
 com/michalporeba/avie/Avie.java
  com.michalporeba.avie.Avie
+com/michalporeba/avie/variables/Variable.java
+ com.michalporeba.avie.variables.Variable
+com/michalporeba/avie/operations/Operation.java
+ com.michalporeba.avie.operations.Operation
+com/michalporeba/avie/operations/SetVariable.java
+ com.michalporeba.avie.operations.SetVariable
 com/michalporeba/avie/algorithms/InsertionSort.java
  com.michalporeba.avie.algorithms.InsertionSort
  com.michalporeba.avie.algorithms.InsertionSort$1
  com.michalporeba.avie.algorithms.InsertionSort$2
  com.michalporeba.avie.algorithms.InsertionSort$3
  com.michalporeba.avie.algorithms.InsertionSort$4
-com/michalporeba/avie/operations/Operation.java
- com.michalporeba.avie.operations.Operation
 com/michalporeba/avie/variables/ArrayVariable.java
  com.michalporeba.avie.variables.ArrayVariable
  com.michalporeba.avie.variables.ArrayVariable$Recorder
-com/michalporeba/avie/operations/SetVariable.java
- com.michalporeba.avie.operations.SetVariable
-com/michalporeba/avie/variables/Variable.java
- com.michalporeba.avie.variables.Variable

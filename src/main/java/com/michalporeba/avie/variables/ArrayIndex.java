@@ -2,7 +2,11 @@ package com.michalporeba.avie.variables;
 
 public class ArrayIndex extends NumericVariable<Integer> {
     public ArrayIndex(ScalarVariable.Recorder recorder, String name) {
-        super(recorder, name, 0);
+        this(recorder, name, 0);
+    }
+
+    private ArrayIndex(ScalarVariable.Recorder recorder, String name, Integer value) {
+        super(recorder, name, value);
     }
 
     public void increment() {
@@ -13,6 +17,10 @@ public class ArrayIndex extends NumericVariable<Integer> {
         add(-1);
     }
 
-    public int next() { return get()+1; }
-    public int previous() { return get()-1; }
+    public ArrayIndex next() { return cloneWithValue(get()+1); }
+    public ArrayIndex previous() { return cloneWithValue(get()-1); }
+
+    private ArrayIndex cloneWithValue(Integer value) {
+        return new ArrayIndex(getRecorder(), getName(), value);
+    }
 }
