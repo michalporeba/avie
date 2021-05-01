@@ -1,23 +1,25 @@
 package com.michalporeba.avie.algorithms;
 
+import com.michalporeba.avie.operations.Operation;
+import com.michalporeba.avie.operations.VariableGet;
+import com.michalporeba.avie.operations.VariableSet;
 import com.michalporeba.avie.variables.*;
 
 import java.util.*;
 
-
-public class InsertionSort implements Iterable<String> {
-    private List<String> steps = new ArrayList<>();
+public class InsertionSort implements Iterable<Operation> {
+    private List<Operation> steps = new ArrayList<>();
     private Map<String, Integer> variables = new HashMap<>();
 
     private ScalarVariable.Recorder scalarRecorder = new ScalarVariable.Recorder() {
         @Override
         public void read(ScalarVariable variable) {
-            steps.add(String.format("%s ->", variable.getName()));
+            steps.add(new VariableGet());
         }
 
         @Override
         public void write(ScalarVariable variable, Object value) {
-            steps.add(String.format("%s <- %d", variable.getName(), value));
+            steps.add(new VariableSet(variable.getName(), value));
         }
     };
 
@@ -29,25 +31,25 @@ public class InsertionSort implements Iterable<String> {
 
         @Override
         public void write(ScalarVariable variable, Object value) {
-            steps.add(String.format("%s <- %d", variable.getName(), value));
+            //steps.add(String.format("%s <- %d", variable.getName(), value));
         }
     };
 
     private ArrayVariable.Recorder arrayRecorder = new ArrayVariable.Recorder() {
         @Override
-        public void read(ArrayVariable variable, ArrayIndex index) {
-            steps.add(String.format("%s[%s=%s] ->", variable.getName(), index.getName(), index.get()));
+        public void read(ArrayVariable variable, ArrayIndexer index) {
+            //steps.add(String.format("%s[%s=%s] ->", variable.getName(), index.getName(), index.get()));
         }
 
         @Override
-        public void write(ArrayVariable variable, ArrayIndex index, Object value) {
-            steps.add(String.format("%s[$s=%s] <- %d", variable.getName(), index.getName(), index.get(), value));
+        public void write(ArrayVariable variable, ArrayIndexer index, Object value) {
+            //steps.add(String.format("%s[$s=%s] <- %d", variable.getName(), index.getName(), index.get(), value));
         }
     };
 
     private ArrayVariable<Integer> a = new ArrayVariable<>(arrayRecorder, "a");
-    private ArrayIndex i = new ArrayIndex(indexRecorder, "i");
-    private ArrayIndex j = new ArrayIndex(indexRecorder, "j");
+    private ArrayIndexer i = new ArrayIndexer(indexRecorder, "i");
+    private ArrayIndexer j = new ArrayIndexer(indexRecorder, "j");
     private NumericVariable<Integer> k = new NumericVariable<>(scalarRecorder, "k", 0);
 
     public void setup(Integer[] input) {
@@ -100,7 +102,7 @@ public class InsertionSort implements Iterable<String> {
     }
 
     @Override
-    public Iterator<String> iterator() {
+    public Iterator<Operation> iterator() {
         return new Iterator<>() {
 
             @Override
@@ -112,7 +114,7 @@ public class InsertionSort implements Iterable<String> {
             }
 
             @Override
-            public String next() {
+            public Operation next() {
                 return steps.remove(0);
             }
         };

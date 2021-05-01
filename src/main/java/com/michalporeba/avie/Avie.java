@@ -1,6 +1,8 @@
 package com.michalporeba.avie;
 
 import com.michalporeba.avie.algorithms.InsertionSort;
+import com.michalporeba.avie.operations.Operation;
+import com.michalporeba.avie.visualisations.ArrayVisualisation;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
@@ -21,23 +23,27 @@ public class Avie extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Avie - Algorithm Visualiser");
 
-        Circle circle = new Circle(150, 150, 50, Color.RED);
-
         InsertionSort algorithm = new InsertionSort();
         algorithm.setup(new Integer[]{3, 8, 2, 7, 1});
+
+        /*
         System.out.println(Arrays.toString(algorithm.getData()));
-        for(String s : algorithm) {
+        for(Operation s : algorithm) {
             System.out.println(s);
         }
         System.out.println(Arrays.toString(algorithm.getData()));
-
-
+        */
 
         MenuBar menuBar = new MenuBar();
-        Pane pane = new Pane(circle);
+        Pane pane = new Pane();
         VBox root = new VBox(menuBar, pane);
+
+        ArrayVisualisation<Integer> v = new ArrayVisualisation<>(pane);
+        v.show(algorithm.getData());
 
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
+
+
     }
 }

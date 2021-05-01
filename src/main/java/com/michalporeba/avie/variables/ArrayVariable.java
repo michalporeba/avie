@@ -12,14 +12,14 @@ public class ArrayVariable<T extends Number> extends Variable{
     }
     public T[] get() { return this.data.clone(); }
 
-    public T getAt(ArrayIndex i) { return getAt(i.get()); }
+    public T getAt(ArrayIndexer i) { return getAt(i.get()); }
     public T getAt(int i) { return data[i]; }
 
-    public void setAt(ArrayIndex i, ScalarVariable<T> value) {
+    public void setAt(ArrayIndexer i, ScalarVariable<T> value) {
         data[i.get()] = value.get();
     }
 
-    public void move(ArrayIndex from, ArrayIndex to) {
+    public void move(ArrayIndexer from, ArrayIndexer to) {
         data[to.get()] = data[from.get()];
     }
 
@@ -28,7 +28,7 @@ public class ArrayVariable<T extends Number> extends Variable{
     }
 
     public interface Recorder {
-        void read(ArrayVariable variable, ArrayIndex index);
-        void write(ArrayVariable variable, ArrayIndex index, Object value);
+        void read(ArrayVariable variable, ArrayIndexer index);
+        void write(ArrayVariable variable, ArrayIndexer index, Object value);
     }
 }
