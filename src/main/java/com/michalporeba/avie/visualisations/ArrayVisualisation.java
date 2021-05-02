@@ -16,8 +16,6 @@ public class ArrayVisualisation<T extends Number> {
         this.pane = new Pane();
         this.pane.prefHeightProperty().bind(visualisationPane.heightProperty());
         this.pane.prefWidthProperty().bind(visualisationPane.widthProperty());
-        this.pane.maxWidthProperty().bind(visualisationPane.widthProperty());
-        this.pane.minWidthProperty().bind(visualisationPane.widthProperty());
         visualisationPane.getChildren().add(pane);
         this.pane.setStyle("-fx-border-color: black");
         visualisationPane.widthProperty().addListener(new ChangeListener<Number>() {
@@ -25,7 +23,7 @@ public class ArrayVisualisation<T extends Number> {
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 Platform.runLater(() -> {
                     System.out.println(newValue);
-                    pane.prefWidth(100);
+                    adjust();
                 });
             }
         });
@@ -39,16 +37,25 @@ public class ArrayVisualisation<T extends Number> {
 
         for(int i = 0; i < l; ++i) {
             Rectangle r = new Rectangle();
-            //r.resize(size*0.9, size*0.9);
-            r.setY(300/2-(size*0.9/2));
-            //r.setX(50+i*50);
             r.setX(i*size);
-            r.xProperty().bind(pane.widthProperty().divide(l).multiply(i));
+            r.setHeight(40);
+            //r.xProperty().bind(pane.widthProperty().divide(l).multiply(i));
             r.setStroke(Color.RED);
-            r.setStrokeWidth(10);
+            r.setStrokeWidth(3);
             arrayNodes[i] = r;
             pane.getChildren().add(r);
         }
+        adjust();
+    }
 
+    private void adjust() {
+        double size = (pane.getWidth()-20) / arrayNodes.length;
+        if(size > 50) size = 50;
+
+        for(int i = 0; i < arrayNodes.length; ++i) {
+            arrayNodes[i].setWidth(size - 10);
+            arrayNodes[i].setX(10+i*size);
+            arrayNodes[i].setY(pane.getHeight()-50);
+        }
     }
 }

@@ -24,7 +24,7 @@ public class Avie extends Application {
         primaryStage.setTitle("Avie - Algorithm Visualiser");
 
         InsertionSort algorithm = new InsertionSort();
-        algorithm.setup(new Integer[]{3, 8, 2, 7, 1});
+        algorithm.setup(new Integer[]{3, 8, 2, 7, 1, 4, 5, 9});
 
         /*
         System.out.println(Arrays.toString(algorithm.getData()));
@@ -44,7 +44,7 @@ public class Avie extends Application {
         ArrayVisualisation<Integer> v = new ArrayVisualisation<>(pane);
         v.show(algorithm.getData());
 
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setScene(new Scene(root, 200, 600));
         primaryStage.show();
     }
 }
