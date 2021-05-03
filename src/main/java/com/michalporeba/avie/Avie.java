@@ -31,9 +31,9 @@ public class Avie extends Application {
         */
 
         MenuBar menuBar = new MenuBar();
-        Pane pane = new AnchorPane();
-        pane.maxHeight(Double.MAX_VALUE);
+        Pane pane = new VBox();
         pane.setStyle("-fx-background-color: green");
+
         BorderPane root = new BorderPane();
         root.setCenter(pane);
         root.setStyle("-fx-border-color: red");
@@ -41,14 +41,16 @@ public class Avie extends Application {
         ArrayVisualisation<Integer> v1 = new ArrayVisualisationWithGraph<>();
         ArrayVisualisation<Integer> v2 = new ArrayVisualisationWithLayouts<>();
         v1.show(algorithm.getData());
-        //v2.show(algorithm.getData());
+        v2.show(algorithm.getData());
 
-        v1.prefHeightProperty().bind(pane.heightProperty());
+        v1.setPrefHeight(100);
         v1.prefWidthProperty().bind(pane.widthProperty());
+        v2.prefWidthProperty().bind(pane.widthProperty());
 
         pane.getChildren().add(v1);
+        pane.getChildren().add(v2);
 
-        primaryStage.setScene(new Scene(root, 200, 600));
+        primaryStage.setScene(new Scene(root, 200, 400));
         primaryStage.show();
     }
 }

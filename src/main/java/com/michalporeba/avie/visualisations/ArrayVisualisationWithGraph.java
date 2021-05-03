@@ -1,8 +1,6 @@
 package com.michalporeba.avie.visualisations;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -17,8 +15,6 @@ public class ArrayVisualisationWithGraph<T extends Number>
         this.widthProperty().addListener(o -> resize());
         this.heightProperty().addListener(o -> resize());
         this.pane = new Pane();
-        this.prefWidthProperty().bind(this.widthProperty());
-        this.prefHeightProperty().bind(this.heightProperty());
         this.pane.setStyle("-fx-border-color: blue");
         this.getChildren().add(pane);
         this.widthProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
@@ -30,6 +26,9 @@ public class ArrayVisualisationWithGraph<T extends Number>
     private void resize() {
         this.pane.setPrefWidth(this.getWidth());
         this.pane.setPrefHeight(this.getHeight());
+        this.pane.setMinWidth(0);
+        this.pane.setMinHeight(0);
+        adjust();
     }
 
     public void show(T[] data) {
@@ -42,7 +41,6 @@ public class ArrayVisualisationWithGraph<T extends Number>
             Rectangle r = new Rectangle();
             r.setX(i*size);
             r.setHeight(40);
-            //r.xProperty().bind(pane.widthProperty().divide(l).multiply(i));
             r.setStroke(Color.RED);
             r.setStrokeWidth(3);
             arrayNodes[i] = r;
