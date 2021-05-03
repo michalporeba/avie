@@ -35,6 +35,9 @@ com/michalporeba/avie/algorithms/InsertionSort.java
  com.michalporeba.avie.algorithms.InsertionSort$4
 com/michalporeba/avie/visualisations/ArrayVisualisation.java
  com.michalporeba.avie.visualisations.ArrayVisualisation
- com.michalporeba.avie.visualisations.ArrayVisualisation$1
+com/michalporeba/avie/visualisations/ArrayVisualisationWithLayouts.java
+ com.michalporeba.avie.visualisations.ArrayVisualisationWithLayouts
+com/michalporeba/avie/visualisations/ArrayVisualisationWithGraph.java
+ com.michalporeba.avie.visualisations.ArrayVisualisationWithGraph
 com/michalporeba/avie/Avie.java
  com.michalporeba.avie.Avie

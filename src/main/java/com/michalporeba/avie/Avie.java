@@ -1,18 +1,14 @@
 package com.michalporeba.avie;
 
 import com.michalporeba.avie.algorithms.InsertionSort;
-import com.michalporeba.avie.operations.Operation;
 import com.michalporeba.avie.visualisations.ArrayVisualisation;
+import com.michalporeba.avie.visualisations.ArrayVisualisationWithGraph;
+import com.michalporeba.avie.visualisations.ArrayVisualisationWithLayouts;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
-import java.util.Arrays;
 
 public class Avie extends Application {
     public static void main(String[] args) {
@@ -37,12 +33,20 @@ public class Avie extends Application {
         MenuBar menuBar = new MenuBar();
         Pane pane = new AnchorPane();
         pane.maxHeight(Double.MAX_VALUE);
+        pane.setStyle("-fx-background-color: green");
         BorderPane root = new BorderPane();
         root.setCenter(pane);
         root.setStyle("-fx-border-color: red");
 
-        ArrayVisualisation<Integer> v = new ArrayVisualisation<>(pane);
-        v.show(algorithm.getData());
+        ArrayVisualisation<Integer> v1 = new ArrayVisualisationWithGraph<>();
+        ArrayVisualisation<Integer> v2 = new ArrayVisualisationWithLayouts<>();
+        v1.show(algorithm.getData());
+        //v2.show(algorithm.getData());
+
+        v1.prefHeightProperty().bind(pane.heightProperty());
+        v1.prefWidthProperty().bind(pane.widthProperty());
+
+        pane.getChildren().add(v1);
 
         primaryStage.setScene(new Scene(root, 200, 600));
         primaryStage.show();
