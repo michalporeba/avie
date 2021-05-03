@@ -1,6 +1,6 @@
 package com.michalporeba.avie.variables;
 
-public class ArrayIndexer extends NumericVariable<Integer> {
+public class ArrayIndexer extends NumericVariable {
     public ArrayIndexer(ScalarVariable.Recorder recorder, String name) {
         this(recorder, name, 0);
     }

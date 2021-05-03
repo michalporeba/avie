@@ -7,7 +7,10 @@ import com.michalporeba.avie.variables.*;
 
 import java.util.*;
 
-public class InsertionSort implements Iterable<Operation> {
+public class InsertionSort
+        extends ArrayAlgorithm
+        implements Iterable<Operation>
+{
     private List<Operation> steps = new ArrayList<>();
     private Map<String, Integer> variables = new HashMap<>();
 
@@ -47,17 +50,17 @@ public class InsertionSort implements Iterable<Operation> {
         }
     };
 
-    private ArrayVariable<Integer> a = new ArrayVariable<>(arrayRecorder, "a");
-    private ArrayIndexer i = new ArrayIndexer(indexRecorder, "i");
-    private ArrayIndexer j = new ArrayIndexer(indexRecorder, "j");
-    private NumericVariable<Integer> k = new NumericVariable<>(scalarRecorder, "k", 0);
+    private ArrayVariable a = register(new ArrayVariable(arrayRecorder, "a"));
+    private ArrayIndexer i = register(new ArrayIndexer(indexRecorder, "i"));
+    private ArrayIndexer j = register(new ArrayIndexer(indexRecorder, "j"));
+    private NumericVariable k = register(new NumericVariable(scalarRecorder, "k", 0));
 
-    public void setup(Integer[] input) {
+    public void setup(int[] input) {
         a.set(input);
         initialize();
     }
 
-    public Integer[] getData() {
+    public int[] getData() {
         return a.get();
     }
 
@@ -94,7 +97,7 @@ public class InsertionSort implements Iterable<Operation> {
 
     public boolean validate() {
         boolean outcome = true;
-        Integer[] data = a.get();
+        int[] data = a.get();
         for(int i = 1; outcome && i < a.size(); ++i) {
             if (data[i] < data[i-1]) outcome = false;
         }

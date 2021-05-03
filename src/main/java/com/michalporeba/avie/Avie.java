@@ -20,7 +20,7 @@ public class Avie extends Application {
         primaryStage.setTitle("Avie - Algorithm Visualiser");
 
         InsertionSort algorithm = new InsertionSort();
-        algorithm.setup(new Integer[]{3, 8, 2, 7, 1, 4, 5, 9});
+        algorithm.setup(new int[]{3, 8, 2, 7, 1, 4, 5, 9});
 
         /*
         System.out.println(Arrays.toString(algorithm.getData()));
@@ -38,17 +38,17 @@ public class Avie extends Application {
         root.setCenter(pane);
         root.setStyle("-fx-border-color: red");
 
-        ArrayVisualisation<Integer> v1 = new ArrayVisualisationWithGraph<>();
-        ArrayVisualisation<Integer> v2 = new ArrayVisualisationWithLayouts<>();
-        v1.show(algorithm.getData());
-        v2.show(algorithm.getData());
+        var v1 = new ArrayVisualisationWithGraph();
+        //var v2 = new ArrayVisualisationWithLayouts();
 
-        v1.setPrefHeight(100);
+        algorithm.attachTo(v1);
+
+        v1.setPrefHeight(200);
         v1.prefWidthProperty().bind(pane.widthProperty());
-        v2.prefWidthProperty().bind(pane.widthProperty());
+        //v2.prefWidthProperty().bind(pane.widthProperty());
 
         pane.getChildren().add(v1);
-        pane.getChildren().add(v2);
+        //pane.getChildren().add(v2);
 
         primaryStage.setScene(new Scene(root, 200, 400));
         primaryStage.show();

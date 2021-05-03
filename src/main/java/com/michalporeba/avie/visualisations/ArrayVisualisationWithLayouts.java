@@ -5,13 +5,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public class ArrayVisualisationWithLayouts<T extends Number>
-    extends ArrayVisualisation<T>
+public class ArrayVisualisationWithLayouts
+    extends Region // implements ArrayVisualisation
 {
     private HBox pane;
     private Circle[] arrayNodes;
@@ -38,7 +39,7 @@ public class ArrayVisualisationWithLayouts<T extends Number>
         adjust();
     }
 
-    public void show(T[] data) {
+    public void show(Integer[] data) {
         int l = data.length;
         arrayNodes = new Circle[l];
         double w = 600;

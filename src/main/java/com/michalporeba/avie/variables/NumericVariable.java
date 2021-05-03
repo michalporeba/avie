@@ -1,15 +1,11 @@
 package com.michalporeba.avie.variables;
 
-public class NumericVariable<T extends Number> extends ScalarVariable<T> {
-    public NumericVariable(ScalarVariable.Recorder recorder, String name, T value) {
+public class NumericVariable extends ScalarVariable {
+    public NumericVariable(ScalarVariable.Recorder recorder, String name, int value) {
         super(recorder, name, value);
     }
 
-    public void add(T value) {
-        if (value instanceof Integer) {
-            set((T)Integer.valueOf(value.intValue()+get().intValue()));
-        } else if (value instanceof Float) {
-            set((T)Float.valueOf(value.floatValue()+get().floatValue()));
-        }
+    public void add(int value) {
+        set(value + get());
     }
 }

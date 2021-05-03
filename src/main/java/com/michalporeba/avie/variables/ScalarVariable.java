@@ -1,21 +1,21 @@
 package com.michalporeba.avie.variables;
 
-public abstract class ScalarVariable<T> extends Variable {
-    private T value;
+public abstract class ScalarVariable extends Variable {
+    private int value;
     private final Recorder recorder;
 
-    public ScalarVariable(Recorder recorder, String name, T value) {
+    public ScalarVariable(Recorder recorder, String name, int value) {
         super(name);
         this.recorder = recorder;
         this.value = value;
     }
 
-    public T get() {
+    public int get() {
         recorder.read(this);
         return this.value;
     }
 
-    public void set(T value) {
+    public void set(int value) {
         recorder.write(this, value);
         this.value = value;
     }

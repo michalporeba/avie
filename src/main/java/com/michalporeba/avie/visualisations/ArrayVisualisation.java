@@ -1,7 +1,10 @@
 package com.michalporeba.avie.visualisations;
 
-import javafx.scene.layout.Region;
+public interface ArrayVisualisation {
+    void reset();
 
-public abstract class ArrayVisualisation<T extends Number> extends Region {
-    public abstract void show(T[] data);
+    void registerIndexer(String name);
+    void registerVariable(String name);
+    void setData(String name, int[] data);
+    void setName(String name);
 }
