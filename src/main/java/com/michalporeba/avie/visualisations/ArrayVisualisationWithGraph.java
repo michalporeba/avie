@@ -182,7 +182,7 @@ public class ArrayVisualisationWithGraph
             valueBox.setX(x+VALUE_MARGIN);
             valueBox.setWidth(width - 2 * VALUE_MARGIN);
 
-            double availableHeight = arrayBox.getY() - y - 2 * VALUE_MARGIN;
+            double availableHeight = arrayBox.getY() - y - 3 * VALUE_MARGIN;
             double valueHeight = availableHeight * (value / maxValue);
             valueBox.setY(y+VALUE_MARGIN + availableHeight - valueHeight);
 
