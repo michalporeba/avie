@@ -1,16 +1,20 @@
 package com.michalporeba.avie.visualisations;
 
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.animation.FillTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
+import java.awt.*;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +41,9 @@ public class ArrayVisualisationWithGraph
         this.getChildren().add(pane);
         this.widthProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
             System.out.println(newValue);
+            if (oldValue.doubleValue() < 600 && newValue.doubleValue() > 600) {
+                data[(newValue.intValue() % data.length)].moveValueTo(variables.get("k"));
+            }
             refresh();
         }));
     }
@@ -134,6 +141,7 @@ public class ArrayVisualisationWithGraph
     }
 
     private class ValueGraph {
+        private final Pane pane;
         private Rectangle arrayBox = new Rectangle();
         private Rectangle valueBox = new Rectangle();
         private Text label;
@@ -146,6 +154,7 @@ public class ArrayVisualisationWithGraph
 
 
         public ValueGraph(Pane pane, String name, int maxValue) {
+            this.pane = pane;
             this.maxValue = maxValue;
             arrayBox.setY(100);
             arrayBox.setStroke(Color.RED);
@@ -167,8 +176,13 @@ public class ArrayVisualisationWithGraph
         public void setY(double y) { this.y = y; }
         public void setHeight(double height) { this.height = height; }
         public void setWidth(double width) { this.width = width; }
-        public void setValue(int value) { this.value = value; }
+        public void setValue(int value) {
+            this.value = value;
+            valueBox.setFill(Color.LIGHTBLUE);
+            valueBox.setOpacity(1);
+        }
         public void setMaxValue(int value) { this.maxValue = value; }
+        public double getValuePositionX() { return this.valueBox.getX(); }
 
         public void refresh() {
             arrayBox.setX(x+VALUE_MARGIN);
@@ -187,6 +201,39 @@ public class ArrayVisualisationWithGraph
             valueBox.setY(y+VALUE_MARGIN + availableHeight - valueHeight);
 
             valueBox.setHeight(valueHeight);
+        }
+
+        public void setStale() {
+            valueBox.setFill(Color.TRANSPARENT);
+        }
+
+        public void moveValueTo(ValueGraph destination) {
+            var m = new Rectangle(valueBox.getX(), valueBox.getY(), valueBox.getWidth(), valueBox.getHeight());
+            m.setFill(Color.LIGHTBLUE);
+            m.setOpacity(0.7);
+            pane.getChildren().add(m);
+            setStale();
+
+            var t = new TranslateTransition();
+            t.setDuration(Duration.millis(1000));
+            t.setNode(m);
+            this.setStale();
+            t.setByX(destination.getValuePositionX() - valueBox.getX());
+            t.statusProperty().addListener((observable, oldValue, newValue) -> {
+                if(newValue == Animation.Status.STOPPED) {
+                    destination.setValue((int)value);
+                    destination.refresh();
+                    pane.getChildren().remove(m);
+                }
+            });
+            destination.dissolve();
+            t.play();
+        }
+
+        private void dissolve() {
+            var t = new FadeTransition(Duration.millis(800), valueBox);
+            t.setToValue(0);
+            t.play();
         }
     }
 }
