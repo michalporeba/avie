@@ -37,7 +37,7 @@ public class ArrayVisualisationWithGraph
         this.widthProperty().addListener(o -> resize());
         this.heightProperty().addListener(o -> resize());
         this.pane = new Pane();
-        this.pane.setStyle("-fx-border-color: blue");
+        this.pane.getStyleClass().add("array-view");
         this.getChildren().add(pane);
         this.widthProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
             System.out.println(newValue);

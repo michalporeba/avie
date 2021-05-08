@@ -32,11 +32,14 @@ public class Avie extends Application {
 
         MenuBar menuBar = new MenuBar();
         Pane pane = new VBox();
-        pane.setStyle("-fx-background-color: green");
 
         BorderPane root = new BorderPane();
         root.setCenter(pane);
-        root.setStyle("-fx-border-color: red");
+
+        var css = this.getClass().getResource("Avie.css").toExternalForm();
+        root.getStyleClass().add("avie");
+        root.getStylesheets().add(css);
+
 
         var v1 = new ArrayVisualisationWithGraph();
         //var v2 = new ArrayVisualisationWithLayouts();

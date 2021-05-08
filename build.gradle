@@ -29,3 +29,12 @@ javafx {
     version = "15"
     modules = ['javafx.controls', 'javafx.fxml']
 }
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/java"]
+            includes = ["**/*.css"]
+        }
+    }
+}

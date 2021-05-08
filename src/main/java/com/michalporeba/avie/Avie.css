@@ -1,0 +1,9 @@
+.root {
+    -fx-border-color: red;
+    -fx-background-color: greenyellow;
+}
+
+.array-view {
+    -fx-border-color: deeppink;
+    -fx-border-width: 10px;
+}
