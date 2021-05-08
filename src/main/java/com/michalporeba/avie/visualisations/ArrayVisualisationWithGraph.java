@@ -2,7 +2,6 @@ package com.michalporeba.avie.visualisations;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
-import javafx.animation.FillTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.layout.Pane;
@@ -13,7 +12,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +24,6 @@ public class ArrayVisualisationWithGraph
     private final double MAX_VALUE_WIDTH = 50;
     private final double MIN_VALUE_WIDTH = 10;
     private final double VALUE_MARGIN = 2;
-    private final double FONT_SIZE = 20;
 
     private final Pane pane;
     private final Map<String, ValueGraph> variables = new HashMap<>();
@@ -141,89 +138,95 @@ public class ArrayVisualisationWithGraph
     }
 
     private class ValueGraph {
-        private final Pane pane;
+        private final Pane parent;
+        private final Pane root;
         private Rectangle arrayBox = new Rectangle();
         private Rectangle valueBox = new Rectangle();
         private Text label;
         private double value = 0;
-        private double x = 0;
-        private double y = 0;
-        private double height = 0;
-        private double width = 0;
         private double maxValue = 0;
 
-
-        public ValueGraph(Pane pane, String name, int maxValue) {
-            this.pane = pane;
+        public ValueGraph(Pane parent, String name, int maxValue) {
+            this.parent = parent;
+            this.root = new Pane();
+            this.root.getStyleClass().add("value-graph");
+            this.parent.getChildren().add(root);
             this.maxValue = maxValue;
-            arrayBox.setY(100);
-            arrayBox.setStroke(Color.RED);
-            arrayBox.setStrokeWidth(3);
-            pane.getChildren().add(arrayBox);
 
-            valueBox.setStroke(Color.GRAY);
-            valueBox.setStrokeWidth(2);
-            valueBox.setFill(Color.LIGHTBLUE);
-            pane.getChildren().add(valueBox);
+            arrayBox.getStyleClass().add("variable");
+            arrayBox.setY(100);
+            root.getChildren().add(arrayBox);
+
+            valueBox.getStyleClass().add("value");
+            root.getChildren().add(valueBox);
 
             label = new Text(name);
-            label.setFont(Font.font ("Verdana", FONT_SIZE));
-            label.setFill(Color.RED);
-            pane.getChildren().add(label);
+            label.getStyleClass().add("label");
+            root.getChildren().add(label);
         }
 
-        public void setX(double x) { this.x = x; }
-        public void setY(double y) { this.y = y; }
-        public void setHeight(double height) { this.height = height; }
-        public void setWidth(double width) { this.width = width; }
+        public void setX(double x) { root.setLayoutX(x); }
+        public void setY(double y) { root.setLayoutY(y); }
+        public void setHeight(double height) { root.setPrefHeight(height); }
+        public void setWidth(double width) { root.setPrefWidth(width); }
         public void setValue(int value) {
             this.value = value;
-            valueBox.setFill(Color.LIGHTBLUE);
+            valueBox.getStyleClass().add("active");
+            valueBox.getStyleClass().remove("stale");
             valueBox.setOpacity(1);
         }
         public void setMaxValue(int value) { this.maxValue = value; }
-        public double getValuePositionX() { return this.valueBox.getX(); }
+        public double getValuePositionX() { return this.root.getLayoutX() + this.valueBox.getX(); }
+
+        public Rectangle getValueRectangle() {
+            var rectangle = new Rectangle(
+                    root.getLayoutX() + valueBox.getX()
+                    ,root.getLayoutY() + valueBox.getY()
+                    ,valueBox.getWidth(), valueBox.getHeight()
+            );
+            rectangle.getStyleClass().add("moving-value");
+            return rectangle;
+        }
 
         public void refresh() {
-            arrayBox.setX(x+VALUE_MARGIN);
-            arrayBox.setY(y+height - width - 2 * VALUE_MARGIN);
-            arrayBox.setWidth(width - 2 * VALUE_MARGIN);
-            arrayBox.setHeight(width);
+            arrayBox.setX(VALUE_MARGIN);
+            arrayBox.setY(root.getPrefHeight() - root.getPrefWidth() - 2 * VALUE_MARGIN);
+            arrayBox.setWidth(root.getPrefWidth() - 2 * VALUE_MARGIN);
+            arrayBox.setHeight(root.getPrefWidth());
 
             label.setLayoutX(arrayBox.getX() + arrayBox.getWidth()/2 - label.getLayoutBounds().getWidth()/2);
             label.setLayoutY(arrayBox.getY() + arrayBox.getHeight()/2);
 
-            valueBox.setX(x+VALUE_MARGIN);
-            valueBox.setWidth(width - 2 * VALUE_MARGIN);
+            valueBox.setX(VALUE_MARGIN);
+            valueBox.setWidth(root.getPrefWidth() - 2 * VALUE_MARGIN);
 
-            double availableHeight = arrayBox.getY() - y - 3 * VALUE_MARGIN;
+            double availableHeight = arrayBox.getY() - root.getLayoutY() - 3 * VALUE_MARGIN;
             double valueHeight = availableHeight * (value / maxValue);
-            valueBox.setY(y+VALUE_MARGIN + availableHeight - valueHeight);
+            valueBox.setY(VALUE_MARGIN + availableHeight - valueHeight);
 
             valueBox.setHeight(valueHeight);
         }
 
         public void setStale() {
-            valueBox.setFill(Color.TRANSPARENT);
+            valueBox.getStyleClass().remove("active");
+            valueBox.getStyleClass().add("stale");
         }
 
         public void moveValueTo(ValueGraph destination) {
-            var m = new Rectangle(valueBox.getX(), valueBox.getY(), valueBox.getWidth(), valueBox.getHeight());
-            m.setFill(Color.LIGHTBLUE);
-            m.setOpacity(0.7);
-            pane.getChildren().add(m);
+            var m = getValueRectangle();
+            parent.getChildren().add(m);
             setStale();
 
             var t = new TranslateTransition();
             t.setDuration(Duration.millis(1000));
             t.setNode(m);
             this.setStale();
-            t.setByX(destination.getValuePositionX() - valueBox.getX());
+            t.setByX(destination.getValuePositionX() - (root.getLayoutX() + valueBox.getX()));
             t.statusProperty().addListener((observable, oldValue, newValue) -> {
                 if(newValue == Animation.Status.STOPPED) {
                     destination.setValue((int)value);
                     destination.refresh();
-                    pane.getChildren().remove(m);
+                    parent.getChildren().remove(m);
                 }
             });
             destination.dissolve();

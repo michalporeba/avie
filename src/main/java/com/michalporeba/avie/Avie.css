@@ -5,5 +5,42 @@
 
 .array-view {
     -fx-border-color: deeppink;
-    -fx-border-width: 10px;
+    -fx-border-width: 15px;
+}
+
+.array-view .value-graph {
+    -fx-border-color: antiquewhite;
+    -fx-border-width: 2px;
+}
+
+.array-view .value-graph .value {
+    -fx-stroke: darkblue;
+    -fx-stroke-width: 2px;
+}
+
+.array-view .value-graph .active {
+    -fx-fill: cornflowerblue;
+}
+
+.array-view .value-graph .stale {
+    -fx-fill: transparent;
+}
+
+.array-view .value-graph .variable {
+    -fx-stroke: red;
+    -fx-stroke-width: 2px;
+    -fx-fill: darkred;
+}
+
+.array-view .value-graph .label {
+    -fx-font-family: "Verdana";
+    -fx-font-size: 20px;
+    -fx-fill: greenyellow;
+}
+
+.array-view .moving-value {
+    -fx-stroke: darkblue;
+    -fx-stroke-width: 2px;
+    -fx-fill: cornflowerblue;
+    -fx-opacity: 0.7;
 }
