@@ -3,11 +3,17 @@ package com.michalporeba.avie.visualisations;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.css.CssMetaData;
+import javafx.css.Styleable;
+import javafx.css.StyleableProperty;
+import javafx.css.StyleablePropertyFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+
+import java.util.List;
 
 class ArrayValueGraph extends Region {
     private final Pane parent;
@@ -16,7 +22,12 @@ class ArrayValueGraph extends Region {
     private Text label;
     private double value = 0;
     private double maxValue = 0;
-    private final double VALUE_MARGIN = 2;
+
+    private static final StyleablePropertyFactory<ArrayValueGraph> STYLE_FACTORY
+            = new StyleablePropertyFactory<>(ArrayValueGraph.getClassCssMetaData());
+
+    private final StyleableProperty<Number> valueOffset
+            = STYLE_FACTORY.createStyleableNumberProperty(this, "valueOffset", "-av-value-offset", x -> x.valueOffset);
 
     public ArrayValueGraph(Pane parent, String name, int maxValue) {
         this.parent = parent;
@@ -78,22 +89,29 @@ class ArrayValueGraph extends Region {
     }
 
     public void refresh() {
-        arrayBox.setX(VALUE_MARGIN);
-        arrayBox.setY(getPrefHeight() - getPrefWidth() - 2 * VALUE_MARGIN);
-        arrayBox.setWidth(getPrefWidth() - 2 * VALUE_MARGIN);
+        arrayBox.setX(getPadding().getLeft());
+        arrayBox.setY(getPrefHeight() - getPrefWidth() - getPadding().getBottom());
+        arrayBox.setWidth(getAvailableWidth());
         arrayBox.setHeight(getPrefWidth());
 
         label.setLayoutX(arrayBox.getX() + arrayBox.getWidth() / 2 - label.getLayoutBounds().getWidth() / 2);
-        label.setLayoutY(arrayBox.getY() + arrayBox.getHeight() / 2);
+        label.setLayoutY(arrayBox.getY() + arrayBox.getHeight() / 2 + label.getLayoutBounds().getHeight() / 3);
 
-        valueBox.setX(VALUE_MARGIN);
-        valueBox.setWidth(getPrefWidth() - 2 * VALUE_MARGIN);
+        valueBox.setX(getPadding().getLeft());
+        valueBox.setWidth(getAvailableWidth());
 
-        double availableHeight = arrayBox.getY() - getLayoutY() - 3 * VALUE_MARGIN;
-        double valueHeight = availableHeight * (value / maxValue);
-        valueBox.setY(VALUE_MARGIN + availableHeight - valueHeight);
+        double valueHeight = getMaxValueHeight() * (value / maxValue);
+        valueBox.setY(getPadding().getTop() + getMaxValueHeight() - valueHeight);
 
         valueBox.setHeight(valueHeight);
+    }
+
+    private double getAvailableWidth() {
+        return getPrefWidth() - getPadding().getLeft() - getPadding().getRight();
+    }
+
+    private double getMaxValueHeight() {
+        return arrayBox.getY() - getPadding().getTop() - valueOffset.getValue().doubleValue();
     }
 
     public void setStale() {
@@ -126,5 +144,10 @@ class ArrayValueGraph extends Region {
         var t = new FadeTransition(Duration.millis(800), valueBox);
         t.setToValue(0);
         t.play();
+    }
+
+    @Override
+    public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
+        return STYLE_FACTORY.getCssMetaData();
     }
 }

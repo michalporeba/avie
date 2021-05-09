@@ -15,16 +15,21 @@ public class ArrayVisualisationWithGraph
             = new StyleablePropertyFactory<>(ArrayVisualisationWithGraph.getClassCssMetaData());
 
     private final StyleableProperty<Number> arrayOffset
-            = STYLE_FACTORY.createStyleableNumberProperty(this, "arrayOffset", "-c-array-offset", x -> x.arrayOffset);
+            = STYLE_FACTORY.createStyleableNumberProperty(this, "arrayOffset", "-av-array-offset", x -> x.arrayOffset);
 
-    private final double MAX_VALUE_WIDTH = 50;
-    private final double MIN_VALUE_WIDTH = 10;
+    private final StyleableProperty<Number> minValueWidth
+            = STYLE_FACTORY.createStyleableNumberProperty(this, "minValueWidth", "-av-min-value-width", x -> x.minValueWidth);
+
+    private final StyleableProperty<Number> maxValueWidth
+            = STYLE_FACTORY.createStyleableNumberProperty(this, "maxValueWidth", "-av-max-value-width", x -> x.maxValueWidth);
 
     private final Map<String, ArrayValueGraph> variables = new HashMap<>();
     private ArrayValueGraph[] data = new ArrayValueGraph[0];
     private int maxValue = 0;
 
     public ArrayVisualisationWithGraph() {
+        this.minValueWidth.setValue(10);
+        this.maxValueWidth.setValue(50);
         this.widthProperty().addListener(o -> resize());
         this.heightProperty().addListener(o -> resize());
         this.getStyleClass().add("array-view");
@@ -102,13 +107,16 @@ public class ArrayVisualisationWithGraph
     }
 
     private double getValueWidth() {
-        int values = variables.size() + data.length;
-        if (data == null || values == 0) return MIN_VALUE_WIDTH;
+        var values = variables.size() + data.length;
+        var minWidth = minValueWidth.getValue().doubleValue();
+        var maxWidth = maxValueWidth.getValue().doubleValue();
+
+        if (data == null || values == 0) return minWidth;
 
         double valueWidth = (getAvailableWidth() - arrayOffset.getValue().doubleValue()) / values ;
 
-        if (valueWidth < MIN_VALUE_WIDTH) return MIN_VALUE_WIDTH;
-        if (valueWidth > MAX_VALUE_WIDTH) return MAX_VALUE_WIDTH;
+        if (valueWidth < minWidth) return minWidth;
+        if (valueWidth > maxWidth) return maxWidth;
         return valueWidth;
     }
 

@@ -7,13 +7,16 @@
     -fx-border-color: deeppink;
     -fx-border-width: 15px;
     -fx-padding: 20px;
-    -c-array-offset: 30;
+    -av-array-offset: 30;
+    -av-min-value-width: 10;
+    -av-max-value-width: 50;
 }
 
 .array-view .value-graph {
     -fx-border-color: antiquewhite;
     -fx-border-width: 2px;
-    -fx-padding: 4px;
+    -fx-padding: 2px 0px;
+    -av-value-offset: 10px;
 }
 
 .array-view .value-graph .value {
