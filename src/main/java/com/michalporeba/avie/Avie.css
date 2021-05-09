@@ -6,6 +6,7 @@
 .array-view {
     -fx-border-color: deeppink;
     -fx-border-width: 15px;
+    -fx-padding: 20px;
 }
 
 .array-view .value-graph {
