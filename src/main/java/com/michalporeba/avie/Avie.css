@@ -7,11 +7,13 @@
     -fx-border-color: deeppink;
     -fx-border-width: 15px;
     -fx-padding: 20px;
+    -c-array-offset: 30;
 }
 
 .array-view .value-graph {
     -fx-border-color: antiquewhite;
     -fx-border-width: 2px;
+    -fx-padding: 4px;
 }
 
 .array-view .value-graph .value {

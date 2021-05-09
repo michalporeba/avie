@@ -47,7 +47,7 @@ public class Avie extends Application {
         algorithm.attachTo(v1);
 
         v1.setPrefHeight(400);
-        v1.prefWidthProperty().bind(pane.widthProperty());
+        //v1.prefWidthProperty().bind(pane.widthProperty());
         //v2.prefWidthProperty().bind(pane.widthProperty());
 
         pane.getChildren().add(v1);

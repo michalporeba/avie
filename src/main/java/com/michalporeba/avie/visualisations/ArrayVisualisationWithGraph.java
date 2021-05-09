@@ -1,20 +1,25 @@
 package com.michalporeba.avie.visualisations;
 
 import javafx.application.Platform;
+import javafx.css.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ArrayVisualisationWithGraph
-    extends Region implements ArrayVisualisation
+    extends Pane implements ArrayVisualisation
 {
-    private final double ARRAY_PADDING = 30;
+    private static final StyleablePropertyFactory<ArrayVisualisationWithGraph> STYLE_FACTORY
+            = new StyleablePropertyFactory<>(ArrayVisualisationWithGraph.getClassCssMetaData());
+
+    private final StyleableProperty<Number> arrayOffset
+            = STYLE_FACTORY.createStyleableNumberProperty(this, "arrayOffset", "-c-array-offset", x -> x.arrayOffset);
+
     private final double MAX_VALUE_WIDTH = 50;
     private final double MIN_VALUE_WIDTH = 10;
 
-    private final Pane pane;
     private final Map<String, ArrayValueGraph> variables = new HashMap<>();
     private ArrayValueGraph[] data = new ArrayValueGraph[0];
     private int maxValue = 0;
@@ -22,9 +27,9 @@ public class ArrayVisualisationWithGraph
     public ArrayVisualisationWithGraph() {
         this.widthProperty().addListener(o -> resize());
         this.heightProperty().addListener(o -> resize());
-        this.pane = new Pane();
-        this.pane.getStyleClass().add("array-view");
-        this.getChildren().add(pane);
+        this.getStyleClass().add("array-view");
+        System.out.println("Array offset: " + this.arrayOffset.getValue());
+
         this.widthProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
             System.out.println(newValue);
             if (oldValue.doubleValue() < 600 && newValue.doubleValue() > 600) {
@@ -35,10 +40,10 @@ public class ArrayVisualisationWithGraph
     }
 
     private void resize() {
-        this.pane.setPrefWidth(this.getWidth());
-        this.pane.setPrefHeight(this.getHeight());
-        this.pane.setMinWidth(0);
-        this.pane.setMinHeight(0);
+        this.setPrefWidth(this.getWidth());
+        this.setPrefHeight(this.getHeight());
+        this.setMinWidth(0);
+        this.setMinHeight(0);
         refresh();
     }
 
@@ -56,8 +61,8 @@ public class ArrayVisualisationWithGraph
         int i = 0;
         for(var v : variables.values()) {
             v.setWidth(valueWidth);
-            v.setX(pane.getPadding().getLeft() + i * valueWidth);
-            v.setY(pane.getPadding().getTop());
+            v.setX(getPadding().getLeft() + i * valueWidth);
+            v.setY(getPadding().getTop());
             v.setHeight(getAvailableHeight());
             v.refresh();
             ++i;
@@ -65,13 +70,13 @@ public class ArrayVisualisationWithGraph
     }
 
     private double getAvailableHeight() {
-        return pane.getHeight()
-                - pane.getPadding().getTop()
-                - pane.getPadding().getBottom();
+        return getHeight()
+                - getPadding().getTop()
+                - getPadding().getBottom();
     }
 
     private double getAvailableWidth() {
-        return pane.getWidth() - pane.getPadding().getLeft() - pane.getPadding().getRight();
+        return getWidth() - getPadding().getLeft() - getPadding().getRight();
     }
 
     private void refreshArray(double valueWidth) {
@@ -79,7 +84,7 @@ public class ArrayVisualisationWithGraph
         for(int i = 0; i < data.length; ++i) {
             data[i].setWidth(valueWidth);
             data[i].setX(arrayLeft + i * valueWidth);
-            data[i].setY(pane.getPadding().getTop());
+            data[i].setY(getPadding().getTop());
             data[i].setHeight(getAvailableHeight());
             data[i].refresh();
         }
@@ -91,16 +96,16 @@ public class ArrayVisualisationWithGraph
     }
 
     private double getArrayLeft() {
-        return pane.getPadding().getLeft()
+        return getPadding().getLeft()
                 + getValueWidth() * variables.size()
-                + ARRAY_PADDING;
+                + arrayOffset.getValue().doubleValue();
     }
 
     private double getValueWidth() {
         int values = variables.size() + data.length;
         if (data == null || values == 0) return MIN_VALUE_WIDTH;
 
-        double valueWidth = (getAvailableWidth() - ARRAY_PADDING) / values ;
+        double valueWidth = (getAvailableWidth() - arrayOffset.getValue().doubleValue()) / values ;
 
         if (valueWidth < MIN_VALUE_WIDTH) return MIN_VALUE_WIDTH;
         if (valueWidth > MAX_VALUE_WIDTH) return MAX_VALUE_WIDTH;
@@ -116,7 +121,7 @@ public class ArrayVisualisationWithGraph
     }
 
     public void registerVariable(String name) {
-        variables.put(name, new ArrayValueGraph(pane, name, maxValue));
+        variables.put(name, new ArrayValueGraph(this, name, maxValue));
         refresh();
     }
 
@@ -127,7 +132,7 @@ public class ArrayVisualisationWithGraph
         }
         this.data = new ArrayValueGraph[data.length];
         for(int i = 0; i < data.length; ++i) {
-            this.data[i] = new ArrayValueGraph(pane, Integer.valueOf(i).toString(), maxValue);
+            this.data[i] = new ArrayValueGraph(this, Integer.valueOf(i).toString(), maxValue);
             this.data[i].setValue(data[i]);
         }
         refresh();
@@ -135,5 +140,10 @@ public class ArrayVisualisationWithGraph
 
     public void setName(String name) {
         refresh();
+    }
+
+    @Override
+    public List<CssMetaData<? extends Styleable, ?>> getCssMetaData() {
+        return STYLE_FACTORY.getCssMetaData();
     }
 }

@@ -1,5 +1,7 @@
 com/michalporeba/avie/operations/ArrawyWrite.java
  com.michalporeba.avie.operations.ArrawyWrite
+com/michalporeba/avie/Avie.java
+ com.michalporeba.avie.Avie
 com/michalporeba/avie/algorithms/ArrayAlgorithm.java
  com.michalporeba.avie.algorithms.ArrayAlgorithm
 com/michalporeba/avie/operations/VariableSet.java
@@ -26,10 +28,10 @@ com/michalporeba/avie/visualisations/ArrayVisualisation.java
 com/michalporeba/avie/variables/ScalarVariable.java
  com.michalporeba.avie.variables.ScalarVariable
  com.michalporeba.avie.variables.ScalarVariable$Recorder
-com/michalporeba/avie/visualisations/ArrayVisualisationWithLayouts.java
- com.michalporeba.avie.visualisations.ArrayVisualisationWithLayouts
 com/michalporeba/avie/operations/ArrayRead.java
  com.michalporeba.avie.operations.ArrayRead
+com/michalporeba/avie/visualisations/ArrayVisualisationWithLayouts.java
+ com.michalporeba.avie.visualisations.ArrayVisualisationWithLayouts
 com/michalporeba/avie/algorithms/InsertionSort.java
  com.michalporeba.avie.algorithms.InsertionSort
  com.michalporeba.avie.algorithms.InsertionSort$1
@@ -40,5 +42,3 @@ com/michalporeba/avie/visualisations/ArrayValueGraph.java
  com.michalporeba.avie.visualisations.ArrayValueGraph
 com/michalporeba/avie/visualisations/ArrayVisualisationWithGraph.java
  com.michalporeba.avie.visualisations.ArrayVisualisationWithGraph
-com/michalporeba/avie/Avie.java
- com.michalporeba.avie.Avie
