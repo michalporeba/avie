@@ -13,8 +13,6 @@
 }
 
 .array-view .value-graph {
-    -fx-border-color: antiquewhite;
-    -fx-border-width: 2px;
     -fx-padding: 2px 0px;
     -av-value-offset: 10px;
 }

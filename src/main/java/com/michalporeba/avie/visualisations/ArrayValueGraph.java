@@ -47,22 +47,6 @@ class ArrayValueGraph extends Region {
         getChildren().add(label);
     }
 
-    public void setX(double x) {
-        setLayoutX(x);
-    }
-
-    public void setY(double y) {
-        setLayoutY(y);
-    }
-
-    public void setHeight(double height) {
-        setPrefHeight(height);
-    }
-
-    public void setWidth(double width) {
-        setPrefWidth(width);
-    }
-
     public void setValue(int value) {
         this.value = value;
         valueBox.getStyleClass().add("active");
@@ -78,7 +62,7 @@ class ArrayValueGraph extends Region {
         return getLayoutX() + this.valueBox.getX();
     }
 
-    public Rectangle getValueRectangle() {
+    private Rectangle getValueRectangle() {
         var rectangle = new Rectangle(
                 getLayoutX() + valueBox.getX()
                 , getLayoutY() + valueBox.getY()
@@ -121,6 +105,7 @@ class ArrayValueGraph extends Region {
 
     public void moveValueTo(ArrayValueGraph destination) {
         var m = getValueRectangle();
+        var currentValue = Integer.valueOf((int)value);
         parent.getChildren().add(m);
         setStale();
 
@@ -131,7 +116,7 @@ class ArrayValueGraph extends Region {
         t.setByX(destination.getValuePositionX() - (getLayoutX() + valueBox.getX()));
         t.statusProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == Animation.Status.STOPPED) {
-                destination.setValue((int) value);
+                destination.setValue(currentValue);
                 destination.refresh();
                 parent.getChildren().remove(m);
             }

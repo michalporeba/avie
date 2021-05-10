@@ -1,9 +1,7 @@
 package com.michalporeba.avie;
 
 import com.michalporeba.avie.algorithms.InsertionSort;
-import com.michalporeba.avie.visualisations.ArrayVisualisation;
-import com.michalporeba.avie.visualisations.ArrayVisualisationWithGraph;
-import com.michalporeba.avie.visualisations.ArrayVisualisationWithLayouts;
+import com.michalporeba.avie.visualisations.StandardArrayVisualisation;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
@@ -41,19 +39,18 @@ public class Avie extends Application {
         root.getStylesheets().add(css);
 
 
-        var v1 = new ArrayVisualisationWithGraph();
-        //var v2 = new ArrayVisualisationWithLayouts();
+        var v1 = new StandardArrayVisualisation();
+        var v2 = new StandardArrayVisualisation();
 
         algorithm.attachTo(v1);
+        algorithm.attachTo(v2);
 
         v1.setPrefHeight(400);
-        //v1.prefWidthProperty().bind(pane.widthProperty());
-        //v2.prefWidthProperty().bind(pane.widthProperty());
-
         pane.getChildren().add(v1);
-        //pane.getChildren().add(v2);
+        v2.setPrefHeight(400);
+        pane.getChildren().add(v2);
 
-        primaryStage.setScene(new Scene(root, 200, 400));
+        primaryStage.setScene(new Scene(root, 400, 600));
         primaryStage.show();
     }
 }
