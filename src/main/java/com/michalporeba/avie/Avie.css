@@ -6,10 +6,17 @@
 .array-view {
     -fx-border-color: deeppink;
     -fx-border-width: 15px;
-    -fx-padding: 20px;
+    -fx-padding: 20;
     -av-array-offset: 30;
     -av-min-value-width: 10;
     -av-max-value-width: 50;
+}
+
+.array-view .name {
+    -fx-font-family: "Verdana";
+    -fx-text-fill: black;
+    -fx-font-size: 40;
+    -fx-opacity: 0.7;
 }
 
 .array-view .value-graph {

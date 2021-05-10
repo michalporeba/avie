@@ -3,6 +3,9 @@ package com.michalporeba.avie.visualisations;
 import javafx.application.Platform;
 import javafx.css.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +29,7 @@ public class StandardArrayVisualisation
     private final Map<String, ArrayValueGraph> variables = new HashMap<>();
     private ArrayValueGraph[] data = new ArrayValueGraph[0];
     private int maxValue = 0;
+    private final Text name = new Text();
 
     public StandardArrayVisualisation() {
         this.minValueWidth.setValue(10);
@@ -33,8 +37,16 @@ public class StandardArrayVisualisation
         this.widthProperty().addListener(o -> resize());
         this.heightProperty().addListener(o -> resize());
         this.getStyleClass().add("array-view");
-        System.out.println("Array offset: " + this.arrayOffset.getValue());
 
+        this.name.getStyleClass().add("name");
+        this.name.setLayoutX(30);
+
+        System.out.println("Padding: " + getPadding().getLeft());
+
+        this.name.setLayoutY(30+this.name.getLayoutBounds().getHeight()*1.5);
+        this.getChildren().add(this.name);
+
+        // temporary only for development
         this.widthProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
             System.out.println(newValue);
             if (oldValue.doubleValue() < 600 && newValue.doubleValue() > 600) {
@@ -68,6 +80,8 @@ public class StandardArrayVisualisation
         refreshVariables(valueWidth);
 
         refreshArray(valueWidth);
+
+        this.name.toFront();
     }
 
     private void refreshVariables(double valueWidth) {
@@ -155,6 +169,7 @@ public class StandardArrayVisualisation
     }
 
     public void setName(String name) {
+        this.name.setText(name);
         refresh();
     }
 
