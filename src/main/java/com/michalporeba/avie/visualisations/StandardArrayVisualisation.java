@@ -5,6 +5,7 @@ import javafx.css.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextBoundsType;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,11 +40,12 @@ public class StandardArrayVisualisation
         this.getStyleClass().add("array-view");
 
         this.name.getStyleClass().add("name");
-        this.name.setLayoutX(30);
+        this.name.setLayoutX(getPadding().getLeft());
+        this.name.setBoundsType(TextBoundsType.VISUAL);
 
         System.out.println("Padding: " + getPadding().getLeft());
 
-        this.name.setLayoutY(30+this.name.getLayoutBounds().getHeight()*1.5);
+        this.name.setLayoutY(getPadding().getTop()+this.name.getLayoutBounds().getHeight()*1.5);
         this.getChildren().add(this.name);
 
         // temporary only for development
@@ -81,6 +83,9 @@ public class StandardArrayVisualisation
 
         refreshArray(valueWidth);
 
+        this.name.setLayoutX(getPadding().getLeft());
+        System.out.println("Padding: " + getPadding().getLeft());
+        this.name.setLayoutY(getPadding().getTop()+this.name.getLayoutBounds().getHeight());
         this.name.toFront();
     }
 

@@ -45,9 +45,9 @@ public class Avie extends Application {
         algorithm.attachTo(v1);
         algorithm.attachTo(v2);
 
-        v1.setPrefHeight(400);
+        v1.setPrefHeight(500);
         pane.getChildren().add(v1);
-        v2.setPrefHeight(400);
+        v2.setPrefHeight(500);
         pane.getChildren().add(v2);
 
         primaryStage.setScene(new Scene(root, 400, 600));

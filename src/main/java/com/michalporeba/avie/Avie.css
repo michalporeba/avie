@@ -14,9 +14,12 @@
 
 .array-view .name {
     -fx-font-family: "Verdana";
-    -fx-text-fill: black;
     -fx-font-size: 40;
     -fx-opacity: 0.7;
+    -fx-font-weight: bold;
+    -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, black 0%, darkred 50%);
+    -fx-stroke: whitesmoke;
+    -fx-stroke-width: 3;
 }
 
 .array-view .value-graph {
