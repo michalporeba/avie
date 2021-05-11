@@ -52,6 +52,12 @@
     -fx-fill: greenyellow;
 }
 
+.array-view .value-graph .marker {
+    -fx-stroke-width: 2;
+    -fx-strok: gold;
+    -fx-fill:yellow;
+}
+
 .array-view .moving-value {
     -fx-stroke: darkblue;
     -fx-stroke-width: 2px;

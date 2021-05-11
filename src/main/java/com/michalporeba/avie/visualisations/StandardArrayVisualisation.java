@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.css.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBoundsType;
 
 import java.util.Arrays;
@@ -17,20 +16,18 @@ public class StandardArrayVisualisation
 {
     private static final StyleablePropertyFactory<StandardArrayVisualisation> STYLE_FACTORY
             = new StyleablePropertyFactory<>(StandardArrayVisualisation.getClassCssMetaData());
-
     private final StyleableProperty<Number> arrayOffset
             = STYLE_FACTORY.createStyleableNumberProperty(this, "arrayOffset", "-av-array-offset", x -> x.arrayOffset);
-
     private final StyleableProperty<Number> minValueWidth
             = STYLE_FACTORY.createStyleableNumberProperty(this, "minValueWidth", "-av-min-value-width", x -> x.minValueWidth);
-
     private final StyleableProperty<Number> maxValueWidth
             = STYLE_FACTORY.createStyleableNumberProperty(this, "maxValueWidth", "-av-max-value-width", x -> x.maxValueWidth);
 
+    private final Text name = new Text();
     private final Map<String, ArrayValueGraph> variables = new HashMap<>();
     private ArrayValueGraph[] data = new ArrayValueGraph[0];
     private int maxValue = 0;
-    private final Text name = new Text();
+
 
     public StandardArrayVisualisation() {
         this.minValueWidth.setValue(10);
