@@ -1,5 +1,9 @@
 package com.michalporeba.avie.visualisations;
 
+import com.michalporeba.avie.operations.IndexerSet;
+import com.michalporeba.avie.operations.Operation;
+import com.michalporeba.avie.operations.VariableSet;
+import com.michalporeba.avie.variables.ArrayIndexer;
 import javafx.application.Platform;
 import javafx.css.*;
 import javafx.scene.layout.Pane;
@@ -25,6 +29,8 @@ public class StandardArrayVisualisation
 
     private final Text name = new Text();
     private final Map<String, ArrayValueGraph> variables = new HashMap<>();
+    private final Map<String, Integer> indexerValues = new HashMap<>();
+    private final Map<String, Integer> indexerOrder = new HashMap<>();
     private ArrayValueGraph[] data = new ArrayValueGraph[0];
     private int maxValue = 0;
 
@@ -119,11 +125,6 @@ public class StandardArrayVisualisation
         }
     }
 
-    private void refreshIndexers(double valueWidth) {
-        double arrayLeft = getArrayLeft();
-
-    }
-
     private double getArrayLeft() {
         return getPadding().getLeft()
                 + getValueWidth() * variables.size()
@@ -149,6 +150,8 @@ public class StandardArrayVisualisation
     }
 
     public void registerIndexer(String name) {
+        indexerOrder.put(name, indexerOrder.size());
+        indexerValues.put(name, 0);
         refresh();
     }
 
@@ -172,6 +175,24 @@ public class StandardArrayVisualisation
 
     public void setName(String name) {
         this.name.setText(name);
+        refresh();
+    }
+
+    public void show(Operation operation) {
+        if (operation instanceof IndexerSet) {
+            var variable = (IndexerSet) operation;
+            var current = indexerValues.get(variable.getVariableName());
+            var next = (int)variable.getValue();
+            var marker = indexerOrder.get(variable.getVariableName());
+            data[current].setMarker(marker, false);
+            data[next].setMarker(marker, true);
+            indexerValues.put(variable.getVariableName(), next);
+        }
+        else if (operation instanceof VariableSet) {
+            var variable = (VariableSet) operation;
+            variables.get(variable.getVariableName()).setValue((int)variable.getValue());
+        }
+
         refresh();
     }
 

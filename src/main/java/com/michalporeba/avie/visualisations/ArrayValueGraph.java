@@ -133,12 +133,12 @@ class ArrayValueGraph extends Region {
         valueBox.getStyleClass().add("stale");
     }
 
-    public void setPrimaryMarker(boolean state) {
-        this.primaryMarkerOn = state;
-    }
-
-    private void setSecondaryMarker(boolean state) {
-        this.secondaryMarkerOn = state;
+    public void setMarker(int marker, boolean state) {
+        if (marker == 0) {
+            this.primaryMarkerOn = state;
+        } else if (marker == 1) {
+            this.secondaryMarkerOn = state;
+        }
     }
 
     public void moveValueTo(ArrayValueGraph destination) {
