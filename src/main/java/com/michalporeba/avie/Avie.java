@@ -26,14 +26,6 @@ public class Avie extends Application {
         InsertionSort algorithm = new InsertionSort();
         algorithm.setup(new int[]{3, 8, 2, 7, 1, 4, 5, 9});
 
-        /*
-        System.out.println(Arrays.toString(algorithm.getData()));
-        for(Operation s : algorithm) {
-            System.out.println(s);
-        }
-        System.out.println(Arrays.toString(algorithm.getData()));
-        */
-
         MenuBar menuBar = new MenuBar();
         Pane pane = new VBox();
 
@@ -59,22 +51,18 @@ public class Avie extends Application {
         primaryStage.setScene(new Scene(root, 400, 600));
         primaryStage.show();
 
-        var timeline = new Timeline(
-            new KeyFrame(Duration.millis(200), e -> progress(algorithm))
-        );
+        var timeline = new Timeline();
 
-        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200), e -> {
+            if (algorithm.isComplete()) {
+                timeline.setOnFinished(null);
+                return;
+            }
+            algorithm.progress();
+        }));
+
+        timeline.setCycleCount(1);
+        timeline.setOnFinished(e -> timeline.play());
         timeline.play();
-    }
-
-    private void progress(Algorithm algorithm) {
-        System.out.println("*");
-        if (algorithm.isComplete()) {
-            timeline.setCycleCount(0);
-            timeline.stop();
-            System.out.println("stopping");
-            return;
-        }
-        algorithm.progress();
     }
 }

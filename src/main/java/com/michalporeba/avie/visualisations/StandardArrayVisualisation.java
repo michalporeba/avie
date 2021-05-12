@@ -46,8 +46,6 @@ public class StandardArrayVisualisation
         this.name.setLayoutX(getPadding().getLeft());
         this.name.setBoundsType(TextBoundsType.VISUAL);
 
-        System.out.println("Padding: " + getPadding().getLeft());
-
         this.name.setLayoutY(getPadding().getTop()+this.name.getLayoutBounds().getHeight()*1.5);
         this.getChildren().add(this.name);
 
@@ -87,7 +85,6 @@ public class StandardArrayVisualisation
         refreshArray(valueWidth);
 
         this.name.setLayoutX(getPadding().getLeft());
-        System.out.println("Padding: " + getPadding().getLeft());
         this.name.setLayoutY(getPadding().getTop()+this.name.getLayoutBounds().getHeight());
         this.name.toFront();
     }
@@ -184,8 +181,12 @@ public class StandardArrayVisualisation
             var current = indexerValues.get(variable.getVariableName());
             var next = (int)variable.getValue();
             var marker = indexerOrder.get(variable.getVariableName());
-            data[current].setMarker(marker, false);
-            data[next].setMarker(marker, true);
+            if (current >= 0 && current < data.length && next >= 0 && next < data.length) {
+                data[current].setMarker(marker, false);
+            }
+            if (next >= 0 && next < data.length) {
+                data[next].setMarker(marker, true);
+            }
             indexerValues.put(variable.getVariableName(), next);
         }
         else if (operation instanceof VariableSet) {
