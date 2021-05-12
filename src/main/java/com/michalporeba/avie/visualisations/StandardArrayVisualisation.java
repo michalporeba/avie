@@ -1,8 +1,6 @@
 package com.michalporeba.avie.visualisations;
 
-import com.michalporeba.avie.operations.IndexerSet;
-import com.michalporeba.avie.operations.Operation;
-import com.michalporeba.avie.operations.VariableSet;
+import com.michalporeba.avie.operations.*;
 import com.michalporeba.avie.variables.ArrayIndexer;
 import javafx.application.Platform;
 import javafx.css.*;
@@ -186,12 +184,20 @@ public class StandardArrayVisualisation
             }
             if (next >= 0 && next < data.length) {
                 data[next].setMarker(marker, true);
+                indexerValues.put(variable.getVariableName(), next);
             }
-            indexerValues.put(variable.getVariableName(), next);
         }
         else if (operation instanceof VariableSet) {
             var variable = (VariableSet) operation;
             variables.get(variable.getVariableName()).setValue((int)variable.getValue());
+        } else if (operation instanceof ArrayToArray) {
+            var source = ((ArrayToArray)operation).getSource();
+            var destination = ((ArrayToArray)operation).getDestination();
+            data[source.getIndex()].moveValueTo(data[destination.getIndex()]);
+        } else if (operation instanceof ArrayToScalar) {
+            var index = ((ArrayToScalar)operation).getIndex();
+            var variable = ((ArrayToScalar)operation).getVariable();
+            data[index].moveValueTo(variables.get(variable));
         }
 
         refresh();

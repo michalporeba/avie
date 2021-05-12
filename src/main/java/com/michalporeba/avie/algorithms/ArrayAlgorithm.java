@@ -1,9 +1,6 @@
 package com.michalporeba.avie.algorithms;
 
-import com.michalporeba.avie.operations.IndexerSet;
-import com.michalporeba.avie.operations.Operation;
-import com.michalporeba.avie.operations.VariableGet;
-import com.michalporeba.avie.operations.VariableSet;
+import com.michalporeba.avie.operations.*;
 import com.michalporeba.avie.variables.*;
 import com.michalporeba.avie.visualisations.ArrayVisualisation;
 
@@ -53,6 +50,15 @@ public abstract class ArrayAlgorithm implements Algorithm {
         @Override
         public void write(ArrayVariable variable, ArrayIndexer index, Object value) {
             //steps.add(String.format("%s[$s=%s] <- %d", variable.getName(), index.getName(), index.get(), value));
+        }
+
+        public void copy(ArrayVariable array, ArrayIndexer from, ArrayIndexer to) {
+            steps.add(new ArrayToArray(array.getName(), from.get(), array.getName(), to.get()));
+        }
+
+        @Override
+        public void copy(ArrayVariable array, ArrayIndexer index, ScalarVariable variable) {
+            steps.add(new ArrayToScalar(array.getName(), index.get(), variable.getName()));
         }
     };
 

@@ -11,9 +11,8 @@ com/michalporeba/avie/operations/VariableSet.java
  com.michalporeba.avie.operations.VariableSet
 com/michalporeba/avie/operations/Operation.java
  com.michalporeba.avie.operations.Operation
-com/michalporeba/avie/variables/ArrayVariable.java
- com.michalporeba.avie.variables.ArrayVariable
- com.michalporeba.avie.variables.ArrayVariable$Recorder
+com/michalporeba/avie/algorithms/Algorithm.java
+ com.michalporeba.avie.algorithms.Algorithm
 com/michalporeba/avie/variables/ArrayIndexer.java
  com.michalporeba.avie.variables.ArrayIndexer
 com/michalporeba/avie/variables/Variable.java
@@ -22,8 +21,12 @@ com/michalporeba/avie/variables/NumericVariable.java
  com.michalporeba.avie.variables.NumericVariable
 com/michalporeba/avie/operations/VariableGet.java
  com.michalporeba.avie.operations.VariableGet
-com/michalporeba/avie/algorithms/InsertionSort.java
- com.michalporeba.avie.algorithms.InsertionSort
+com/michalporeba/avie/visualisations/Visualisation.java
+ com.michalporeba.avie.visualisations.Visualisation
+com/michalporeba/avie/visualisations/ArrayVisualisation.java
+ com.michalporeba.avie.visualisations.ArrayVisualisation
+com/michalporeba/avie/visualisations/ArrayValueGraph.java
+ com.michalporeba.avie.visualisations.ArrayValueGraph
 com/michalporeba/avie/algorithms/ArrayAlgorithm.java
  com.michalporeba.avie.algorithms.ArrayAlgorithm
  com.michalporeba.avie.algorithms.ArrayAlgorithm$1
@@ -32,19 +35,16 @@ com/michalporeba/avie/algorithms/ArrayAlgorithm.java
  com.michalporeba.avie.algorithms.ArrayAlgorithm$4
 com/michalporeba/avie/operations/ArrayOperation.java
  com.michalporeba.avie.operations.ArrayOperation
-com/michalporeba/avie/visualisations/ArrayVisualisation.java
- com.michalporeba.avie.visualisations.ArrayVisualisation
-com/michalporeba/avie/algorithms/Algorithm.java
- com.michalporeba.avie.algorithms.Algorithm
 com/michalporeba/avie/operations/ArrayToArray.java
  com.michalporeba.avie.operations.ArrayToArray
-com/michalporeba/avie/visualisations/Visualisation.java
- com.michalporeba.avie.visualisations.Visualisation
-com/michalporeba/avie/operations/ArrayToScalar.java
- com.michalporeba.avie.operations.ArrayToScalar
-com/michalporeba/avie/visualisations/ArrayValueGraph.java
- com.michalporeba.avie.visualisations.ArrayValueGraph
-com/michalporeba/avie/Avie.java
- com.michalporeba.avie.Avie
 com/michalporeba/avie/visualisations/StandardArrayVisualisation.java
  com.michalporeba.avie.visualisations.StandardArrayVisualisation
+com/michalporeba/avie/algorithms/InsertionSort.java
+ com.michalporeba.avie.algorithms.InsertionSort
+com/michalporeba/avie/operations/ArrayToScalar.java
+ com.michalporeba.avie.operations.ArrayToScalar
+com/michalporeba/avie/variables/ArrayVariable.java
+ com.michalporeba.avie.variables.ArrayVariable
+ com.michalporeba.avie.variables.ArrayVariable$Recorder
+com/michalporeba/avie/Avie.java
+ com.michalporeba.avie.Avie
