@@ -1,4 +1,4 @@
 package com.michalporeba.avie.operations;
 
-public class Operation {
+public abstract class Operation {
 }

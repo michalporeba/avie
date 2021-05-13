@@ -2,8 +2,6 @@ package com.michalporeba.avie.algorithms;
 
 import com.michalporeba.avie.variables.*;
 
-import java.util.*;
-
 public class InsertionSort
         extends ArrayAlgorithm {
 
@@ -34,14 +32,13 @@ public class InsertionSort
 
     @Override
     protected void step() {
-        k.set(a.getAt(j));
+        k.take(a, j);
         i.set(j.get()-1);
         while (i.get() >=0 && a.getAt(i) > k.get()) {
-            a.move(i, i.next());
+            a.copy(i, i.next());
             i.decrement();
         }
-        a.setAt(i.next(), k);
-
+        k.set(a, i.next());
         j.increment();
     }
 

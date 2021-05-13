@@ -2,6 +2,7 @@ package com.michalporeba.avie.visualisations;
 
 import com.michalporeba.avie.operations.*;
 import com.michalporeba.avie.variables.ArrayIndexer;
+import com.michalporeba.avie.variables.ScalarVariable;
 import javafx.application.Platform;
 import javafx.css.*;
 import javafx.scene.layout.Pane;
@@ -198,6 +199,10 @@ public class StandardArrayVisualisation
             var index = ((ArrayToScalar)operation).getIndex();
             var variable = ((ArrayToScalar)operation).getVariable();
             data[index].moveValueTo(variables.get(variable));
+        } else if (operation instanceof ScalarToArray) {
+            var index = ((ScalarToArray)operation).getIndex();
+            var variable = ((ScalarToArray)operation).getVariable();
+            variables.get(variable).moveValueTo(data[index]);
         }
 
         refresh();

@@ -53,7 +53,7 @@ public class Avie extends Application {
 
         var timeline = new Timeline();
 
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200), e -> {
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), e -> {
             if (algorithm.isComplete()) {
                 timeline.setOnFinished(null);
                 return;

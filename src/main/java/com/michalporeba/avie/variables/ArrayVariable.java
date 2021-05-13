@@ -22,12 +22,8 @@ public class ArrayVariable extends Variable{
         recorder.write(this, i, value.get());
     }
 
-    public void move(ArrayIndexer from, ArrayIndexer to) {
+    public void copy(ArrayIndexer from, ArrayIndexer to) {
         data[to.get()] = data[from.get()];
-        recorder.copy(this, from, to);
-    }
-    public void move(ArrayIndexer from, ScalarVariable to) {
-        to.set(data[from.get()]);
         recorder.copy(this, from, to);
     }
 
@@ -36,9 +32,8 @@ public class ArrayVariable extends Variable{
     }
 
     public interface Recorder {
-        void read(ArrayVariable array, ArrayIndexer index);
-        void write(ArrayVariable array, ArrayIndexer index, Object value);
-        void copy(ArrayVariable array, ArrayIndexer from, ArrayIndexer to);
-        void copy(ArrayVariable array, ArrayIndexer index, ScalarVariable variable);
+        default void read(ArrayVariable array, ArrayIndexer index) {}
+        default void write(ArrayVariable array, ArrayIndexer index, Object value) {}
+        default void copy(ArrayVariable array, ArrayIndexer from, ArrayIndexer to) {}
     }
 }

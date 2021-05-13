@@ -20,9 +20,21 @@ public abstract class ScalarVariable extends Variable {
         this.value = value;
     }
 
+    public void take(ArrayVariable array, ArrayIndexer index) {
+        recorder.copy(array, index, this);
+        this.value = array.getAt(index);
+    }
+
+    public void set(ArrayVariable array, ArrayIndexer index) {
+        recorder.copy(this, array, index);
+        array.setAt(index, this);
+    }
+
     public interface Recorder {
-        void read(ScalarVariable variable);
-        void write(ScalarVariable variable, Object value);
+        default void read(ScalarVariable variable) {}
+        default void write(ScalarVariable variable, Object value) {}
+        default void copy(ArrayVariable array, ArrayIndexer index, ScalarVariable variable) {}
+        default void copy(ScalarVariable variable, ArrayVariable array, ArrayIndexer index) {}
     }
 
     protected Recorder getRecorder() {

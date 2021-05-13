@@ -4,7 +4,6 @@ import com.michalporeba.avie.operations.*;
 import com.michalporeba.avie.variables.*;
 import com.michalporeba.avie.visualisations.ArrayVisualisation;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,18 +25,22 @@ public abstract class ArrayAlgorithm implements Algorithm {
         public void write(ScalarVariable variable, Object value) {
             steps.add(new VariableSet(variable.getName(), value));
         }
+
+        @Override
+        public void copy(ArrayVariable array, ArrayIndexer index, ScalarVariable variable) {
+            steps.add(new ArrayToScalar(array.getName(), index.get(), variable.getName()));
+        }
+
+        @Override
+        public void copy(ScalarVariable variable, ArrayVariable array, ArrayIndexer index) {
+            steps.add(new ScalarToArray(array.getName(), index.get(), variable.getName()));
+        }
     };
 
     private ScalarVariable.Recorder indexRecorder = new ScalarVariable.Recorder() {
         @Override
-        public void read(ScalarVariable variable) {
-            // do nothing
-        }
-
-        @Override
         public void write(ScalarVariable variable, Object value) {
             steps.add(new IndexerSet(variable.getName(), (int)value));
-            //steps.add(String.format("%s <- %d", variable.getName(), value));
         }
     };
 
@@ -52,13 +55,9 @@ public abstract class ArrayAlgorithm implements Algorithm {
             //steps.add(String.format("%s[$s=%s] <- %d", variable.getName(), index.getName(), index.get(), value));
         }
 
+        @Override
         public void copy(ArrayVariable array, ArrayIndexer from, ArrayIndexer to) {
             steps.add(new ArrayToArray(array.getName(), from.get(), array.getName(), to.get()));
-        }
-
-        @Override
-        public void copy(ArrayVariable array, ArrayIndexer index, ScalarVariable variable) {
-            steps.add(new ArrayToScalar(array.getName(), index.get(), variable.getName()));
         }
     };
 
