@@ -24,7 +24,7 @@ public class Avie extends Application {
         primaryStage.setTitle("Avie - Algorithm Visualiser");
 
         InsertionSort algorithm = new InsertionSort();
-        algorithm.setup(new int[]{3, 8, 2, 7, 1, 4, 5, 9});
+        algorithm.setup(new int[]{3, 8, 2, 7, 1, 4, 5, 9, 6});
 
         MenuBar menuBar = new MenuBar();
         Pane pane = new VBox();
@@ -53,7 +53,7 @@ public class Avie extends Application {
 
         var timeline = new Timeline();
 
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1000), e -> {
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200), e -> {
             if (algorithm.isComplete()) {
                 timeline.setOnFinished(null);
                 return;

@@ -14,7 +14,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 class ArrayValueGraph extends Region {
     private final Pane parent;
@@ -26,7 +29,9 @@ class ArrayValueGraph extends Region {
     private boolean secondaryMarkerOn = false;
 
     private Text label;
-    private double value = 0;
+    private double currentValue = 0;
+    private double displayValue = 0;
+    private final Queue<Integer> values = new LinkedBlockingQueue<>();
     private double maxValue = 0;
 
     private static final StyleablePropertyFactory<ArrayValueGraph> STYLE_FACTORY
@@ -58,13 +63,13 @@ class ArrayValueGraph extends Region {
         secondaryMarker.getStyleClass().add("marker");
         secondaryMarker.setOpacity(0);
         getChildren().add(secondaryMarker);
+
+        setFresh();
     }
 
     public void setValue(int value) {
-        this.value = value;
-        valueBox.getStyleClass().add("active");
-        valueBox.getStyleClass().remove("stale");
-        valueBox.setOpacity(1);
+        this.currentValue = value;
+        this.displayValue = value;
     }
 
     public void setMaxValue(int value) {
@@ -76,16 +81,19 @@ class ArrayValueGraph extends Region {
     }
 
     private Rectangle getValueRectangle() {
+        double valueHeight = getValueHeight(this.currentValue);
         var rectangle = new Rectangle(
                 getLayoutX() + valueBox.getX()
-                , getLayoutY() + valueBox.getY()
-                , valueBox.getWidth(), valueBox.getHeight()
+                , getLayoutY() + getPadding().getTop() + getMaxValueHeight() - valueHeight
+                , valueBox.getWidth(), valueHeight
         );
         rectangle.getStyleClass().add("moving-value");
         return rectangle;
     }
 
     public void refresh() {
+        refreshValue();
+
         arrayBox.setX(getPadding().getLeft());
         arrayBox.setY(getPrefHeight() - getPrefWidth() - getPadding().getBottom());
         arrayBox.setWidth(getAvailableWidth());
@@ -96,11 +104,6 @@ class ArrayValueGraph extends Region {
 
         valueBox.setX(getPadding().getLeft());
         valueBox.setWidth(getAvailableWidth());
-
-        double valueHeight = getMaxValueHeight() * (value / maxValue);
-        valueBox.setY(getPadding().getTop() + getMaxValueHeight() - valueHeight);
-
-        valueBox.setHeight(valueHeight);
 
         primaryMarker.getPoints().clear();
         primaryMarker.getPoints().addAll(new Double[] {
@@ -119,6 +122,12 @@ class ArrayValueGraph extends Region {
         });
     }
 
+    private void refreshValue() {
+        double valueHeight = getValueHeight(displayValue);
+        valueBox.setY(getPadding().getTop() + getMaxValueHeight() - valueHeight);
+        valueBox.setHeight(valueHeight);
+    }
+
     private double getAvailableWidth() {
         return getPrefWidth() - getPadding().getLeft() - getPadding().getRight();
     }
@@ -127,9 +136,30 @@ class ArrayValueGraph extends Region {
         return arrayBox.getY() - getPadding().getTop() - valueOffset.getValue().doubleValue();
     }
 
+    private double getValueHeight(double value) {
+        return getMaxValueHeight() * (value / maxValue);
+    }
+
     public void setStale() {
         valueBox.getStyleClass().remove("active");
         valueBox.getStyleClass().add("stale");
+    }
+
+    public void setFresh() {
+        refreshValue();
+        valueBox.setOpacity(1);
+        valueBox.getStyleClass().remove("stale");
+        valueBox.getStyleClass().add("active");
+    }
+
+    public void queueValue(int value) {
+        this.currentValue = value;
+        values.add(value);
+    }
+
+    public void nextValue() {
+        this.displayValue = values.remove();
+        setFresh();
     }
 
     public void setMarker(int marker, boolean state) {
@@ -144,19 +174,18 @@ class ArrayValueGraph extends Region {
 
     public void moveValueTo(ArrayValueGraph destination) {
         var m = getValueRectangle();
-        var currentValue = Integer.valueOf((int)value);
         parent.getChildren().add(m);
-        setStale();
+        this.setStale();
+        destination.queueValue((int)currentValue);
 
         var t = new TranslateTransition();
         t.setDuration(Duration.millis(1000));
         t.setNode(m);
-        this.setStale();
         t.setByX(destination.getValuePositionX() - (getLayoutX() + valueBox.getX()));
         t.statusProperty().addListener((observable, oldValue, newValue) -> {
+
             if (newValue == Animation.Status.STOPPED) {
-                destination.setValue(currentValue);
-                destination.refresh();
+                destination.nextValue();
                 parent.getChildren().remove(m);
             }
         });

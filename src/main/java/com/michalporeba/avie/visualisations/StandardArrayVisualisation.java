@@ -1,9 +1,6 @@
 package com.michalporeba.avie.visualisations;
 
 import com.michalporeba.avie.operations.*;
-import com.michalporeba.avie.variables.ArrayIndexer;
-import com.michalporeba.avie.variables.ScalarVariable;
-import javafx.application.Platform;
 import javafx.css.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -47,23 +44,6 @@ public class StandardArrayVisualisation
 
         this.name.setLayoutY(getPadding().getTop()+this.name.getLayoutBounds().getHeight()*1.5);
         this.getChildren().add(this.name);
-
-        // temporary only for development
-        this.widthProperty().addListener((observable, oldValue, newValue) -> Platform.runLater(() -> {
-            System.out.println(newValue);
-            if (oldValue.doubleValue() < 600 && newValue.doubleValue() > 600) {
-                var from = (int)(Math.random() * data.length);
-                var to = (int)(Math.random() * data.length);
-                if (from == to) {
-                    data[from].moveValueTo(variables.get("k"));
-                    variables.get("k").moveValueTo(data[from]);
-                } else {
-                    data[from].moveValueTo(data[to]);
-                    data[to].moveValueTo(data[from]);
-                }
-            }
-            refresh();
-        }));
     }
 
     private void resize() {
