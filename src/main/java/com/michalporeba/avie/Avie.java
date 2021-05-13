@@ -53,7 +53,7 @@ public class Avie extends Application {
 
         var timeline = new Timeline();
 
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(1100), e -> {
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200), e -> {
             if (algorithm.isComplete()) {
                 timeline.setOnFinished(null);
                 return;
@@ -61,8 +61,8 @@ public class Avie extends Application {
             algorithm.progress();
         }));
 
-        timeline.setCycleCount(20);
-        //timeline.setOnFinished(e -> timeline.play());
+        timeline.setCycleCount(1);
+        timeline.setOnFinished(e -> timeline.play());
         timeline.play();
     }
 }

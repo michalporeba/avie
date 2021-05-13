@@ -53,8 +53,10 @@ class ArrayValueGraph extends Region {
         getChildren().add(label);
 
         primaryMarker.getStyleClass().add("marker");
+        primaryMarker.setOpacity(0);
         getChildren().add(primaryMarker);
         secondaryMarker.getStyleClass().add("marker");
+        secondaryMarker.setOpacity(0);
         getChildren().add(secondaryMarker);
     }
 
@@ -101,23 +103,20 @@ class ArrayValueGraph extends Region {
         valueBox.setHeight(valueHeight);
 
         primaryMarker.getPoints().clear();
-        if (primaryMarkerOn) {
-            primaryMarker.getPoints().addAll(new Double[] {
-               arrayBox.getX(), arrayBox.getY(),
-                    arrayBox.getX(), arrayBox.getY() + arrayBox.getHeight()/6,
-               arrayBox.getX() + arrayBox.getWidth()/3, arrayBox.getY()+arrayBox.getHeight()/3,
-               arrayBox.getX() + arrayBox.getWidth(), arrayBox.getY()
-            });}
+        primaryMarker.getPoints().addAll(new Double[] {
+           arrayBox.getX(), arrayBox.getY(),
+                arrayBox.getX(), arrayBox.getY() + arrayBox.getHeight()/6,
+           arrayBox.getX() + arrayBox.getWidth()/3, arrayBox.getY()+arrayBox.getHeight()/3,
+           arrayBox.getX() + arrayBox.getWidth(), arrayBox.getY()
+        });
 
         secondaryMarker.getPoints().clear();
-        if (secondaryMarkerOn) {
-            secondaryMarker.getPoints().addAll(new Double[] {
-                    arrayBox.getX(), arrayBox.getY() + arrayBox.getHeight(),
-                    arrayBox.getX() + arrayBox.getWidth()/3*2, arrayBox.getY()+arrayBox.getHeight()/3*2,
-                    arrayBox.getX() + arrayBox.getWidth(), arrayBox.getY() + arrayBox.getHeight()/6*5,
-                    arrayBox.getX() + arrayBox.getWidth(), arrayBox.getY() + arrayBox.getHeight()
-            });
-        }
+        secondaryMarker.getPoints().addAll(new Double[] {
+                arrayBox.getX(), arrayBox.getY() + arrayBox.getHeight(),
+                arrayBox.getX() + arrayBox.getWidth()/3*2, arrayBox.getY()+arrayBox.getHeight()/3*2,
+                arrayBox.getX() + arrayBox.getWidth(), arrayBox.getY() + arrayBox.getHeight()/6*5,
+                arrayBox.getX() + arrayBox.getWidth(), arrayBox.getY() + arrayBox.getHeight()
+        });
     }
 
     private double getAvailableWidth() {
@@ -136,8 +135,10 @@ class ArrayValueGraph extends Region {
     public void setMarker(int marker, boolean state) {
         if (marker == 0) {
             this.primaryMarkerOn = state;
+            this.primaryMarker.setOpacity(state ? 1: 0);
         } else if (marker == 1) {
             this.secondaryMarkerOn = state;
+            this.secondaryMarker.setOpacity(state ? 1: 0);
         }
     }
 
