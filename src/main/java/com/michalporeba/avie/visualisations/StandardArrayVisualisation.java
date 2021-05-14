@@ -183,6 +183,10 @@ public class StandardArrayVisualisation
             var index = ((ScalarToArray)operation).getIndex();
             var variable = ((ScalarToArray)operation).getVariable();
             variables.get(variable).moveValueTo(data[index]);
+        } else if (operation instanceof ArraySwap) {
+            var a = ((ArraySwap)operation).getA();
+            var b = ((ArraySwap)operation).getB();
+            data[a.getIndex()].swapWith(data[b.getIndex()]);
         }
 
         refresh();

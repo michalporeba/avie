@@ -20,6 +20,10 @@ public abstract class ScalarVariable extends Variable {
         this.value = value;
     }
 
+    private void set(ScalarVariable variable) {
+        set(variable.get());
+    }
+
     public void take(ArrayVariable array, ArrayIndexer index) {
         recorder.copy(array, index, this);
         this.value = array.getAt(index);

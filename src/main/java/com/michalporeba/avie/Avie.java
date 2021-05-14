@@ -1,6 +1,7 @@
 package com.michalporeba.avie;
 
 import com.michalporeba.avie.algorithms.Algorithm;
+import com.michalporeba.avie.algorithms.BubbleSort;
 import com.michalporeba.avie.algorithms.InsertionSort;
 import com.michalporeba.avie.visualisations.StandardArrayVisualisation;
 import javafx.animation.Animation;
@@ -23,7 +24,7 @@ public class Avie extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Avie - Algorithm Visualiser");
 
-        InsertionSort algorithm = new InsertionSort();
+        var algorithm = new BubbleSort();
         algorithm.setup(new int[]{3, 8, 2, 7, 1, 4, 5, 9, 6});
 
         MenuBar menuBar = new MenuBar();

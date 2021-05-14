@@ -22,6 +22,13 @@ public class ArrayVariable extends Variable{
         recorder.write(this, i, value.get());
     }
 
+    public void swap(ArrayIndexer a, ArrayIndexer b) {
+        int tmp = data[a.get()];
+        data[a.get()] = data[b.get()];
+        data[b.get()] = tmp;
+        recorder.swap(this, a, b);
+    }
+
     public void copy(ArrayIndexer from, ArrayIndexer to) {
         data[to.get()] = data[from.get()];
         recorder.copy(this, from, to);
@@ -35,5 +42,6 @@ public class ArrayVariable extends Variable{
         default void read(ArrayVariable array, ArrayIndexer index) {}
         default void write(ArrayVariable array, ArrayIndexer index, Object value) {}
         default void copy(ArrayVariable array, ArrayIndexer from, ArrayIndexer to) {}
+        default void swap(ArrayVariable array, ArrayIndexer a, ArrayIndexer b) {}
     }
 }

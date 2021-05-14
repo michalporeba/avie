@@ -192,6 +192,14 @@ class ArrayValueGraph extends Region {
         t.play();
     }
 
+    public void swapWith(ArrayValueGraph other) {
+        var tmp = this.getValue();
+        this.setValue(other.getValue());
+        other.setValue(tmp);
+    }
+
+    private int getValue() { return (int)currentValue; }
+
     private void dissolve() {
         var t = new FadeTransition(Duration.millis(800), valueBox);
         t.setToValue(0);

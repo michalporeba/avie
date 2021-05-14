@@ -17,6 +17,10 @@ public class ArrayIndexer extends NumericVariable {
         add(-1);
     }
 
+    public void set(ArrayIndexer indexer) {
+        set(indexer.get());
+    }
+
     public ArrayIndexer next() { return cloneWithValue(get()+1); }
     public ArrayIndexer previous() { return cloneWithValue(get()-1); }
 

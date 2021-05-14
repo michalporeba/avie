@@ -59,6 +59,11 @@ public abstract class ArrayAlgorithm implements Algorithm {
         public void copy(ArrayVariable array, ArrayIndexer from, ArrayIndexer to) {
             steps.add(new ArrayToArray(array.getName(), from.get(), array.getName(), to.get()));
         }
+
+        @Override
+        public void swap(ArrayVariable array, ArrayIndexer a, ArrayIndexer b) {
+            steps.add(new ArraySwap(array.getName(), a.get(), array.getName(), b.get()));
+        }
     };
 
     public String getName() { return "Insertion Sort"; }
