@@ -15,10 +15,6 @@ public class InsertionSort
         initialize();
     }
 
-    public int[] getData() {
-        return a.get();
-    }
-
     private void initialize() {
         i.set(0);
         k.set(0);
@@ -40,14 +36,5 @@ public class InsertionSort
         }
         k.set(a, i.next());
         j.increment();
-    }
-
-    public boolean validate() {
-        boolean outcome = true;
-        int[] data = a.get();
-        for(int i = 1; outcome && i < a.size(); ++i) {
-            if (data[i] < data[i-1]) outcome = false;
-        }
-        return outcome;
     }
 }
