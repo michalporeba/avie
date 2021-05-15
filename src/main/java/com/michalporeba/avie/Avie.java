@@ -1,6 +1,7 @@
 package com.michalporeba.avie;
 
 import com.michalporeba.avie.algorithms.Algorithm;
+import com.michalporeba.avie.algorithms.ArrayAlgorithm;
 import com.michalporeba.avie.algorithms.BubbleSort;
 import com.michalporeba.avie.algorithms.InsertionSort;
 import com.michalporeba.avie.visualisations.StandardArrayVisualisation;
@@ -14,8 +15,13 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Avie extends Application {
     private Timeline timeline;
+    private final List<ArrayAlgorithm> algorithms = new ArrayList<>();
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -24,8 +30,6 @@ public class Avie extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Avie - Algorithm Visualiser");
 
-        var algorithm = new BubbleSort();
-        algorithm.setup(new int[]{3, 8, 2, 7, 1, 4, 5, 9, 6});
 
         MenuBar menuBar = new MenuBar();
         Pane pane = new VBox();
@@ -37,29 +41,32 @@ public class Avie extends Application {
         root.getStyleClass().add("avie");
         root.getStylesheets().add(css);
 
+        algorithms.add(new BubbleSort());
+        algorithms.add(new InsertionSort());
 
-        var v1 = new StandardArrayVisualisation();
-        var v2 = new StandardArrayVisualisation();
-
-        algorithm.attachTo(v1);
-        algorithm.attachTo(v2);
-
-        v1.setPrefHeight(500);
-        pane.getChildren().add(v1);
-        v2.setPrefHeight(500);
-        pane.getChildren().add(v2);
-
+        for(var algorithm : algorithms) {
+            algorithm.setup(new int[]{3, 8, 2, 7, 1, 4, 5, 9, 6});
+            var v = new StandardArrayVisualisation();
+            v.setPrefHeight(500);
+            pane.getChildren().add(v);
+            algorithm.attachTo(v);
+        }
         primaryStage.setScene(new Scene(root, 400, 600));
         primaryStage.show();
 
         var timeline = new Timeline();
 
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200), e -> {
-            if (algorithm.isComplete()) {
-                timeline.setOnFinished(null);
-                return;
+            var stillWorking = false;
+            for(var algorithm : algorithms) {
+                if (!algorithm.isComplete()) {
+                    algorithm.progress();
+                    stillWorking = true;
+                }
             }
-            algorithm.progress();
+            if (!stillWorking) {
+                timeline.setOnFinished(null);
+            }
         }));
 
         timeline.setCycleCount(1);

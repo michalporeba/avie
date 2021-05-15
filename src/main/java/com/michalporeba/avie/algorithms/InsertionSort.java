@@ -10,15 +10,17 @@ public class InsertionSort
     private ArrayIndexer j = createArrayIndexer("j");
     private NumericVariable k = createNumericVariable("k", 0);
 
-    public void setup(int[] input) {
-        a.set(input);
-        initialize();
-    }
-
-    private void initialize() {
+    @Override
+    protected void initialize(int[] data) {
+        a.set(data);
         i.set(0);
         k.set(0);
         j.set(1);
+    }
+
+    @Override
+    public String getName() {
+        return "Insertion Sort";
     }
 
     @Override

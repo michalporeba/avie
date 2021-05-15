@@ -10,14 +10,15 @@ public class BubbleSort
     private ArrayVariable a = createArrayVariable("a");
     private ArrayIndexer i = createArrayIndexer("i");
     private ArrayIndexer j = createArrayIndexer("j");
-    //private NumericVariable k = createNumericVariable("k", 0);
 
-    public void setup(int[] input) {
-        a.set(input);
-        initialize();
+    @Override
+    public String getName() {
+        return "Bubble Sort";
     }
 
-    private void initialize() {
+    @Override
+    protected void initialize(int[] data) {
+        a.set(data);
         i.set(a.size()-1);
         j.set(0);
     }

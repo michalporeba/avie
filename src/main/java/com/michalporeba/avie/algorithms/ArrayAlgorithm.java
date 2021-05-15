@@ -66,7 +66,11 @@ public abstract class ArrayAlgorithm implements Algorithm {
         }
     };
 
-    public String getName() { return "Insertion Sort"; }
+    public void setup(int[] input) {
+        initialize(input);
+    }
+
+    protected abstract void initialize(int[] data);
 
     public boolean isComplete() { return this.complete; }
 
