@@ -2,6 +2,7 @@ package com.michalporeba.avie;
 
 import com.michalporeba.avie.algorithms.ArrayAlgorithm;
 import com.michalporeba.avie.algorithms.BubbleSort;
+import com.michalporeba.avie.algorithms.BubbleSort2;
 import com.michalporeba.avie.algorithms.InsertionSort;
 import com.michalporeba.avie.visualisations.StandardArrayVisualisation;
 import javafx.animation.KeyFrame;
@@ -40,6 +41,7 @@ public class Avie extends Application {
         root.getStylesheets().add(css);
 
         algorithms.add(new BubbleSort());
+        algorithms.add(new BubbleSort2());
         algorithms.add(new InsertionSort());
 
         for(var algorithm : algorithms) {
@@ -49,7 +51,7 @@ public class Avie extends Application {
             pane.getChildren().add(v);
             algorithm.attachTo(v);
         }
-        primaryStage.setScene(new Scene(root, 400, 600));
+        primaryStage.setScene(new Scene(root, 600, 1000));
         primaryStage.show();
 
         var timeline = new Timeline();

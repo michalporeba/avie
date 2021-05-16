@@ -73,6 +73,9 @@ public abstract class ArrayAlgorithm implements Algorithm {
     protected abstract void initialize(int[] data);
 
     public boolean isComplete() { return this.complete; }
+    public void setComplete() {
+        this.complete = true;
+    }
 
     public void attachTo(ArrayVisualisation visualisation) {
         visualisation.reset();
@@ -113,7 +116,7 @@ public abstract class ArrayAlgorithm implements Algorithm {
     protected abstract void step();
 
     private boolean advance() {
-        if (continueWhile()) {
+        if (!complete && continueWhile()) {
             step();
             return true;
         }
