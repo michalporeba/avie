@@ -35,8 +35,8 @@ com/michalporeba/avie/operations/ArrayRead.java
  com.michalporeba.avie.operations.ArrayRead
 com/michalporeba/avie/operations/ArrayToScalar.java
  com.michalporeba.avie.operations.ArrayToScalar
-com/michalporeba/avie/visualisations/StandardArrayVisualisation.java
- com.michalporeba.avie.visualisations.StandardArrayVisualisation
+com/michalporeba/avie/operations/IndexerSet.java
+ com.michalporeba.avie.operations.IndexerSet
 com/michalporeba/avie/visualisations/Visualisation.java
  com.michalporeba.avie.visualisations.Visualisation
 com/michalporeba/avie/operations/ArrayToArray.java
@@ -50,7 +50,7 @@ com/michalporeba/avie/operations/ScalarToArray.java
  com.michalporeba.avie.operations.ScalarToArray
 com/michalporeba/avie/operations/VariableGet.java
  com.michalporeba.avie.operations.VariableGet
-com/michalporeba/avie/operations/IndexerSet.java
- com.michalporeba.avie.operations.IndexerSet
 com/michalporeba/avie/Avie.java
  com.michalporeba.avie.Avie
+com/michalporeba/avie/visualisations/StandardArrayVisualisation.java
+ com.michalporeba.avie.visualisations.StandardArrayVisualisation

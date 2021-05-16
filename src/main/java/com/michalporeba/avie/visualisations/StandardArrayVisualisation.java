@@ -70,9 +70,10 @@ public class StandardArrayVisualisation
 
     private void refreshVariables(double valueWidth) {
         int i = 0;
+        double arrayLeft = getVariableLeft();
         for(var v : variables.values()) {
             v.setPrefWidth(valueWidth);
-            v.setLayoutX(getPadding().getLeft() + i * valueWidth);
+            v.setLayoutX(arrayLeft + i * valueWidth);
             v.setLayoutY(getPadding().getTop());
             v.setPrefHeight(getAvailableHeight());
             v.refresh();
@@ -87,23 +88,23 @@ public class StandardArrayVisualisation
     }
 
     private double getAvailableWidth() {
-        return getWidth() - getPadding().getLeft() - getPadding().getRight();
+        return getWidth() - getPadding().getLeft() - getPadding().getRight()
+                - (variables.size() > 0 ? arrayOffset.getValue().doubleValue() : 0);
     }
 
     private void refreshArray(double valueWidth) {
-        double arrayLeft = getArrayLeft();
         for(int i = 0; i < data.length; ++i) {
             data[i].setPrefWidth(valueWidth);
-            data[i].setLayoutX(arrayLeft + i * valueWidth);
+            data[i].setLayoutX(getPadding().getLeft() + i * valueWidth);
             data[i].setLayoutY(getPadding().getTop());
             data[i].setPrefHeight(getAvailableHeight());
             data[i].refresh();
         }
     }
 
-    private double getArrayLeft() {
+    private double getVariableLeft() {
         return getPadding().getLeft()
-                + getValueWidth() * variables.size()
+                + getValueWidth() * data.length
                 + arrayOffset.getValue().doubleValue();
     }
 
@@ -114,7 +115,7 @@ public class StandardArrayVisualisation
 
         if (data == null || values == 0) return minWidth;
 
-        double valueWidth = (getAvailableWidth() - arrayOffset.getValue().doubleValue()) / values ;
+        double valueWidth = (getAvailableWidth()) / values ;
 
         if (valueWidth < minWidth) return minWidth;
         if (valueWidth > maxWidth) return maxWidth;

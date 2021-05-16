@@ -1,11 +1,9 @@
 package com.michalporeba.avie;
 
-import com.michalporeba.avie.algorithms.Algorithm;
 import com.michalporeba.avie.algorithms.ArrayAlgorithm;
 import com.michalporeba.avie.algorithms.BubbleSort;
 import com.michalporeba.avie.algorithms.InsertionSort;
 import com.michalporeba.avie.visualisations.StandardArrayVisualisation;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
