@@ -24,11 +24,11 @@ public class Avie extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    public static boolean firstRun = true;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Avie - Algorithm Visualiser");
-
 
         MenuBar menuBar = new MenuBar();
         Pane pane = new VBox();
@@ -57,6 +57,12 @@ public class Avie extends Application {
         var timeline = new Timeline();
 
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200), e -> {
+            if (firstRun) {
+                firstRun = false;
+                try {
+                    Thread.sleep(3000);
+                } catch (Exception ex) {}
+            }
             var stillWorking = false;
             for(var algorithm : algorithms) {
                 if (!algorithm.isComplete()) {
