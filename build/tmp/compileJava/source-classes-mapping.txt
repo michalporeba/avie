@@ -27,8 +27,8 @@ com/michalporeba/avie/visualisations/ArrayVisualisation.java
  com.michalporeba.avie.visualisations.ArrayVisualisation
 com/michalporeba/avie/algorithms/Algorithm.java
  com.michalporeba.avie.algorithms.Algorithm
-com/michalporeba/avie/Avie.java
- com.michalporeba.avie.Avie
+com/michalporeba/avie/algorithms/BubbleSort.java
+ com.michalporeba.avie.algorithms.BubbleSort
 com/michalporeba/avie/operations/ArrayRead.java
  com.michalporeba.avie.operations.ArrayRead
 com/michalporeba/avie/algorithms/InsertionSort.java
@@ -54,5 +54,5 @@ com/michalporeba/avie/operations/VariableGet.java
  com.michalporeba.avie.operations.VariableGet
 com/michalporeba/avie/operations/IndexerSet.java
  com.michalporeba.avie.operations.IndexerSet
-com/michalporeba/avie/algorithms/BubbleSort.java
- com.michalporeba.avie.algorithms.BubbleSort
+com/michalporeba/avie/Avie.java
+ com.michalporeba.avie.Avie

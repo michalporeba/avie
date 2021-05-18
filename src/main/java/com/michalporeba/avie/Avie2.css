@@ -1,0 +1,66 @@
+.root {
+    -fx-border-color: red;
+    -fx-background-color: ghostwhite;
+}
+
+.array-view {
+    -fx-border-color: lightgray;
+    -fx-border-width: 10px;
+    -fx-padding: 15;
+    -av-array-offset: 45;
+    -av-min-value-width: 10;
+    -av-max-value-width: 50;
+}
+
+.array-view .name {
+    -fx-font-family: "Verdana";
+    -fx-font-size: 30;
+    -fx-opacity: 0.7;
+    -fx-font-weight: bold;
+    -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, black 0%, darkred 50%);
+    -fx-stroke: whitesmoke;
+    -fx-stroke-width: 3;
+}
+
+.array-view .value-graph {
+    -fx-padding: 2px 0px;
+    -av-value-offset: 10px;
+}
+
+.array-view .value-graph .value {
+    -fx-stroke: royalblue;
+    -fx-stroke-width: 2px;
+}
+
+.array-view .value-graph .active {
+    -fx-fill: dodgerblue;
+}
+
+.array-view .value-graph .stale {
+    -fx-fill: lightskyblue;
+}
+
+.array-view .moving-value {
+    -fx-stroke: royalblue;
+    -fx-stroke-width: 2px;
+    -fx-fill: dodgerblue;
+    -fx-opacity: 0.7;
+}
+
+.array-view .value-graph .variable {
+    -fx-stroke: red;
+    -fx-stroke-width: 2px;
+    -fx-fill: dimgrey;
+}
+
+.array-view .value-graph .label {
+    -fx-font-family: "Verdana";
+    -fx-font-size: 20px;
+    -fx-fill: greenyellow;
+}
+
+.array-view .value-graph .marker {
+    -fx-stroke-width: 2;
+    -fx-strok: gold;
+    -fx-fill:yellow;
+}

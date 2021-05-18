@@ -36,7 +36,7 @@ public class Avie extends Application {
         BorderPane root = new BorderPane();
         root.setCenter(pane);
 
-        var css = this.getClass().getResource("Avie.css").toExternalForm();
+        var css = this.getClass().getResource("Avie2.css").toExternalForm();
         root.getStyleClass().add("avie");
         root.getStylesheets().add(css);
 
@@ -60,7 +60,7 @@ public class Avie extends Application {
             if (firstRun) {
                 firstRun = false;
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (Exception ex) {}
             }
             var stillWorking = false;
